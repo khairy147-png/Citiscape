@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "citiscape",
+  "main": "cloudflare-worker.js",
+  "compatibility_date": "2026-08-22",
+  "assets": {
+    "directory": "./assessment",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "ASSESSMENT_STORE",
+        "class_name": "AssessmentStore"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["AssessmentStore"]
+    }
+  ]
+}
