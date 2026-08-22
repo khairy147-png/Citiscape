@@ -30,7 +30,8 @@ export default async function handler() {
       }
     });
   } catch {
-    return new Response('NPS', {
+    const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120"><rect width="320" height="120" rx="18" fill="#ffffff"/><text x="24" y="73" font-family="Arial, sans-serif" font-size="58" font-weight="700" fill="#0b2d50">NPS</text><rect x="24" y="88" width="132" height="6" rx="3" fill="#c7a33a"/><text x="174" y="52" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0b2d50">National Projects</text><text x="174" y="76" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0b2d50">Services</text></svg>`;
+    return new Response(svg, {
       status: 200,
       headers: {
         'content-type': 'image/svg+xml; charset=utf-8',
