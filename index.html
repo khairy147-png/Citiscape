@@ -3,435 +3,1340 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Citiscape L.L.C. - Operations Control Book | Enhancement Proposal Consolidation</title>
+  <title>Insight Middle East Consulting | HR Consultancy – Abu Dhabi, UAE</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Insight Middle East Consulting – Licensed HR Consultancy in Abu Dhabi offering strategic HR solutions, organizational development, and performance excellence." />
+  <meta name="keywords" content="HR Consultancy UAE, Human Resources Abu Dhabi, HR Consulting Services, Organizational Development UAE, Insight Middle East Consulting" />
+  <meta name="author" content="Mohamed Khairy – Insight Middle East Consulting" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Insight Middle East Consulting | HR Consultancy – Abu Dhabi" />
+  <meta property="og:description" content="Licensed HR Consultancy in Abu Dhabi offering strategic HR solutions, organizational development, and performance excellence." />
+  <meta property="og:image" content="https://insight-me.ae/images/logo.png" />
+  <meta property="og:url" content="https://insight-me.ae" />
+  <meta property="og:site_name" content="Insight Middle East Consulting" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Insight Middle East Consulting | HR Consultancy – Abu Dhabi" />
+  <meta name="twitter:description" content="Licensed HR Consultancy in Abu Dhabi offering strategic HR solutions, organizational development, and performance excellence." />
+  <meta name="twitter:image" content="https://insight-me.ae/images/logo.png" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://insight-me.ae" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <link rel="apple-touch-icon" href="images/icon.png" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
   <style>
+    /* ─────────────────────────────────────────
+       TOKENS
+    ───────────────────────────────────────── */
     :root {
-      --primary-blue:#009cd3;
-      --dark-navy:#0f172a;
-      --accent-orange:#f97316;
-      --owned-green:#16a34a;
-      --rental-purple:#7c3aed;
-      --attendance-teal:#0f766e;
-      --budget-maroon:#7f1d1d;
-      --bg:#eef3f8;
-      --surface:#ffffff;
-      --text:#1e293b;
-      --muted:#64748b;
-      --border:#cbd5e1;
-      --shadow:0 12px 30px rgba(15,23,42,.08);
-      --success-bg:#ecfdf5;
-      --success-border:#10b981;
-      --enh-bg:#fff7ed;
-      --enh-border:#f97316;
+      --red:         #B22222;
+      --red-dark:    #8B1A1A;
+      --gold:        #C9A227;
+      --gold-light:  #E8C84A;
+      --gold-muted:  #9B7A1A;
+      --ink:         #1A1210;
+      --ink-soft:    #3D2E2A;
+      --smoke:       #F7F4F0;
+      --white:       #FDFCFB;
+      --divider:     rgba(201,162,39,.25);
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'DM Sans', Arial, sans-serif;
+
+      --max-w: 1160px;
+      --nav-h: 72px;
     }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(180deg,#f8fbff 0%, var(--bg) 100%);color:var(--text)}
-    .topbar{position:sticky;top:0;z-index:1000;background:rgba(15,23,42,.96);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.08);box-shadow:0 8px 24px rgba(0,0,0,.18)}
-    .topbar-inner{max-width:1680px;margin:0 auto;padding:14px 22px;display:flex;gap:18px;align-items:center;justify-content:space-between}
-    .brand{color:#fff;display:flex;flex-direction:column;gap:2px}
-    .brand strong{font-size:1.05rem;letter-spacing:.2px}
-    .brand span{font-size:.76rem;color:#cbd5e1}
-    .nav-tabs{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
-    .nav-btn{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#e2e8f0;padding:10px 14px;border-radius:999px;font-size:.84rem;font-weight:700;cursor:pointer;transition:.2s ease}
-    .nav-btn:hover{background:rgba(255,255,255,.14);transform:translateY(-1px)}
-    .nav-btn.active{background:var(--primary-blue);border-color:var(--primary-blue);color:#fff;box-shadow:0 8px 22px rgba(0,156,211,.28)}
 
-    .shell{max-width:1680px;margin:0 auto;padding:24px 22px 30px}
-    .hero{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:26px;box-shadow:var(--shadow);margin-bottom:18px}
-    .hero-grid{display:grid;grid-template-columns:2fr 1fr;gap:18px;align-items:start}
-    .hero h1{margin:0 0 8px;font-size:2rem;line-height:1.15;color:var(--dark-navy)}
-    .hero p.lead{margin:0;color:#475569;font-size:1rem;line-height:1.6}
-    .hero-side{display:grid;gap:12px}
-    .status-card{border:1px solid var(--border);border-radius:14px;padding:14px 15px;background:#f8fafc}
-    .status-card .label{font-size:.74rem;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);font-weight:800;margin-bottom:6px}
-    .status-card .value{font-size:1rem;font-weight:800;color:var(--dark-navy)}
-    .status-card .sub{font-size:.82rem;color:#475569;margin-top:5px;line-height:1.45}
-    .status-card.baseline{border-left:6px solid var(--success-border);background:var(--success-bg)}
-    .status-card.enhancement{border-left:6px solid var(--enh-border);background:var(--enh-bg)}
+    /* ─────────────────────────────────────────
+       RESET & BASE
+    ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    .chapters{display:grid;grid-template-columns:1fr;gap:18px}
-    .chapter{display:none;background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
-    .chapter.active{display:block}
-    .chapter-header{padding:18px 22px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%)}
-    .chapter-title-row{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap}
-    .chapter h2{margin:0;font-size:1.45rem;color:var(--dark-navy)}
-    .chapter .chapter-sub{margin:6px 0 0;color:#475569;font-size:.96rem;line-height:1.55;max-width:1100px}
-    .page-badge{padding:8px 12px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-weight:800;font-size:.78rem;white-space:nowrap}
-    .chapter-body{padding:20px 22px 24px}
+    html { scroll-behavior: smooth; font-size: 16px; }
 
-    .baseline-enhancement-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
-    .note-card{border-radius:14px;padding:16px;border:1px solid var(--border)}
-    .note-card h3{margin:0 0 10px;font-size:1rem;color:var(--dark-navy)}
-    .note-card p,.note-card li{font-size:.9rem;line-height:1.55;color:#475569;margin:0}
-    .note-card ul{margin:0;padding-left:18px;display:grid;gap:8px}
-    .note-card.baseline{background:var(--success-bg);border-left:6px solid var(--success-border)}
-    .note-card.enh{background:var(--enh-bg);border-left:6px solid var(--enh-border)}
-
-    .iframe-wrap{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 8px 24px rgba(15,23,42,.05)}
-    .iframe-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;background:#0f172a;color:#fff;font-size:.8rem;font-weight:700}
-    .toolbar-tags{display:flex;gap:8px;flex-wrap:wrap}
-    .toolbar-tag{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.12);color:#e2e8f0;font-size:.75rem}
-    iframe.chapter-frame{display:block;width:100%;height:1380px;border:0;background:#fff}
-
-    .exec-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
-    .exec-panel{border:1px solid var(--border);border-radius:14px;padding:16px;background:#fff}
-    .exec-panel h3{margin:0 0 12px;font-size:1rem;color:var(--dark-navy)}
-    .exec-panel ul{margin:0;padding-left:18px;display:grid;gap:10px}
-    .exec-panel li{font-size:.92rem;color:#475569;line-height:1.55}
-    .legend{display:grid;grid-template-columns:repeat(4,minmax(140px,1fr));gap:12px}
-    .legend-card{border:1px solid var(--border);border-radius:12px;padding:12px;background:#f8fafc}
-    .legend-card strong{display:block;font-size:.76rem;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-    .legend-card span{font-size:.9rem;font-weight:700;color:var(--dark-navy)}
-    .enh-matrix{width:100%;border-collapse:collapse;margin-top:8px}
-    .enh-matrix th,.enh-matrix td{border:1px solid var(--border);padding:10px 9px;text-align:left;vertical-align:top;font-size:.88rem;line-height:1.5}
-    .enh-matrix th{background:#f1f5f9;font-size:.76rem;text-transform:uppercase;letter-spacing:.4px;color:var(--dark-navy)}
-    .enh-matrix td small{display:block;color:var(--muted);font-size:.78rem;margin-top:4px}
-    .footer-nav{display:flex;justify-content:space-between;gap:14px;margin-top:20px;flex-wrap:wrap}
-    .footer-nav button{padding:11px 16px;border-radius:12px;border:1px solid var(--border);background:#fff;color:var(--dark-navy);font-weight:800;cursor:pointer;transition:.2s ease}
-    .footer-nav button:hover{background:#f8fafc;transform:translateY(-1px)}
-
-    @media (max-width: 1100px){
-      .hero-grid,.exec-grid,.baseline-enhancement-grid{grid-template-columns:1fr}
-      .legend{grid-template-columns:repeat(2,minmax(140px,1fr))}
-      iframe.chapter-frame{height:1200px}
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
     }
-    @media (max-width: 700px){
-      .topbar-inner{padding:12px 14px;align-items:flex-start;flex-direction:column}
-      .shell{padding:16px 14px 24px}
-      .hero h1{font-size:1.6rem}
-      .legend{grid-template-columns:1fr}
-      .nav-tabs{justify-content:flex-start}
-      iframe.chapter-frame{height:1050px}
+
+    img { display: block; max-width: 100%; }
+    a   { color: inherit; text-decoration: none; }
+
+    /* ─────────────────────────────────────────
+       UTILITY
+    ───────────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: clamp(1.25rem, 5vw, 3rem);
     }
-    @media print{
-      .topbar{display:none}
-      .chapter{display:block !important;page-break-after:always}
-      .hero{page-break-after:always}
-      iframe.chapter-frame{height:1200px}
-      body{background:#fff}
+
+    .section-label {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: .6875rem;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--ink);
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--red);
+    }
+
+    .section-body {
+      font-size: 1.0625rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--ink-soft);
+      max-width: 64ch;
+    }
+
+    /* Reveal animations – pure CSS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes lineGrow {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    /* ─────────────────────────────────────────
+       GEOMETRIC PATTERN (CSS-only)
+    ───────────────────────────────────────── */
+    .geo-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .geo-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 38px,
+          rgba(201,162,39,.055) 38px,
+          rgba(201,162,39,.055) 39px
+        ),
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 38px,
+          rgba(201,162,39,.055) 38px,
+          rgba(201,162,39,.055) 39px
+        );
+    }
+
+    /* ─────────────────────────────────────────
+       NAVIGATION
+    ───────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      z-index: 100;
+      background: rgba(253,252,251,.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .nav__inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .nav__brand {
+      display: flex;
+      align-items: center;
+      gap: .875rem;
+      flex-shrink: 0;
+    }
+
+    .nav__icon {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .nav__logo {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: clamp(.75rem, 2.5vw, 2rem);
+      list-style: none;
+    }
+
+    .nav__links a {
+      font-family: var(--font-body);
+      font-size: .8125rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      transition: color .2s;
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .nav__links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 1.5px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s ease;
+    }
+
+    .nav__links a:hover { color: var(--ink); }
+    .nav__links a:hover::after { transform: scaleX(1); }
+
+    /* Mobile menu toggle */
+    .nav__toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+
+    .nav__toggle span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--ink);
+      transition: transform .25s, opacity .25s;
+    }
+
+    /* ─────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      background: var(--ink);
+      padding-top: var(--nav-h);
+      overflow: hidden;
+    }
+
+    /* Gradient wash */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 80% 50%, rgba(178,34,34,.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 80% at 5%  90%, rgba(201,162,39,.12) 0%, transparent 65%);
+      z-index: 1;
+    }
+
+    .hero .geo-bg::before { opacity: .4; }
+
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      padding-block: 6rem;
+    }
+
+    .hero__eyebrow {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-bottom: 2rem;
+      animation: fadeIn .8s ease both;
+    }
+
+    .hero__eyebrow-line {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero__eyebrow-text {
+      font-family: var(--font-body);
+      font-size: .6875rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .hero__headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.75rem, 6vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      animation: fadeUp .9s .1s ease both;
+    }
+
+    .hero__headline strong {
+      font-weight: 700;
+      display: block;
+    }
+
+    .hero__headline em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero__subtitle {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 2vw, 1.1875rem);
+      font-weight: 300;
+      color: rgba(253,252,251,.65);
+      letter-spacing: .04em;
+      margin-bottom: 3rem;
+      animation: fadeUp .9s .2s ease both;
+    }
+
+    .hero__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: .75rem;
+      background: var(--gold);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: .875rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 1rem 2.25rem;
+      border: none;
+      cursor: pointer;
+      transition: background .25s, transform .2s;
+      animation: fadeUp .9s .3s ease both;
+    }
+
+    .hero__cta:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .hero__cta-arrow {
+      display: inline-block;
+      transition: transform .2s;
+    }
+
+    .hero__cta:hover .hero__cta-arrow { transform: translateX(4px); }
+
+    /* Decorative vertical text */
+    .hero__vertical {
+      position: absolute;
+      right: clamp(1rem, 4vw, 3rem);
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      transform-origin: center;
+      font-size: .625rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,.4);
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    /* Gold rule at bottom of hero */
+    .hero__rule {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--red) 70%, transparent);
+      z-index: 2;
+    }
+
+    /* ─────────────────────────────────────────
+       ABOUT
+    ───────────────────────────────────────── */
+    .about {
+      padding-block: clamp(4rem, 9vw, 7rem);
+      background: var(--smoke);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2.5rem, 6vw, 5rem);
+      align-items: start;
+    }
+
+    .about__left { position: relative; }
+
+    .about__logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    .about__logo {
+      max-width: 280px;
+      width: 100%;
+    }
+
+    .about__badge {
+      display: inline-flex;
+      flex-direction: column;
+      gap: .25rem;
+      border-left: 3px solid var(--gold);
+      padding-left: 1rem;
+    }
+
+    .about__badge-label {
+      font-size: .625rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold-muted);
+      font-weight: 500;
+    }
+
+    .about__badge-value {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .about__right {}
+
+    .about__intro {
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--red);
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
+    .about__text {
+      font-size: 1.0625rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--ink-soft);
+    }
+
+    .about__text + .about__text { margin-top: 1rem; }
+
+    .about__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--divider);
+    }
+
+    .about__meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: .25rem;
+    }
+
+    .about__meta-label {
+      font-size: .625rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold-muted);
+      font-weight: 500;
+    }
+
+    .about__meta-value {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* ─────────────────────────────────────────
+       SERVICES
+    ───────────────────────────────────────── */
+    .services {
+      padding-block: clamp(4rem, 9vw, 7rem);
+      background: var(--white);
+      position: relative;
+    }
+
+    .services__head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .services__count {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 10vw, 8rem);
+      font-weight: 300;
+      line-height: 1;
+      color: rgba(178,34,34,.07);
+      letter-spacing: -.02em;
+      user-select: none;
+    }
+
+    .services__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--divider);
+    }
+
+    .service-card {
+      background: var(--white);
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: background .3s;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--red);
+      transition: height .35s ease;
+    }
+
+    .service-card:hover { background: var(--smoke); }
+    .service-card:hover::before { height: 100%; }
+
+    .service-card__num {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: rgba(201,162,39,.25);
+      line-height: 1;
+      margin-bottom: 1.25rem;
+      transition: color .3s;
+    }
+
+    .service-card:hover .service-card__num { color: rgba(201,162,39,.5); }
+
+    .service-card__title {
+      font-family: var(--font-display);
+      font-size: 1.3125rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.3;
+      margin-bottom: .875rem;
+    }
+
+    .service-card__body {
+      font-size: .9375rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--ink-soft);
+    }
+
+    /* ─────────────────────────────────────────
+       EXPERTISE
+    ───────────────────────────────────────── */
+    .expertise {
+      padding-block: clamp(4rem, 9vw, 7rem);
+      background: var(--ink);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .expertise .geo-bg::before { opacity: .35; }
+
+    .expertise__inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: clamp(3rem, 7vw, 6rem);
+      align-items: center;
+    }
+
+    .expertise__left {}
+
+    .expertise .section-label { color: var(--gold); }
+    .expertise .section-title { color: var(--white); }
+
+    .expertise__desc {
+      font-size: 1.0625rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(253,252,251,.65);
+      margin-top: 1.5rem;
+    }
+
+    .expertise__right {}
+
+    .expertise__pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .pillar {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(201,162,39,.12);
+      transition: background .3s;
+      cursor: default;
+    }
+
+    .pillar:hover { background: rgba(201,162,39,.07); }
+
+    .pillar__icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(201,162,39,.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pillar__icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .pillar__title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .pillar__sub {
+      font-size: .875rem;
+      font-weight: 300;
+      color: rgba(253,252,251,.5);
+      margin-top: .2rem;
+    }
+
+    /* ─────────────────────────────────────────
+       VISION & MISSION
+    ───────────────────────────────────────── */
+    .vision {
+      padding-block: clamp(4rem, 9vw, 7rem);
+      background: var(--smoke);
+      position: relative;
+    }
+
+    .vision__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .vision-card {
+      padding: 2.5rem 2rem;
+      background: var(--white);
+      border: 1px solid var(--divider);
+      position: relative;
+    }
+
+    .vision-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--red), var(--gold));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .4s ease;
+    }
+
+    .vision-card:hover::after { transform: scaleX(1); }
+
+    .vision-card__type {
+      font-size: .625rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold-muted);
+      font-weight: 500;
+      margin-bottom: .75rem;
+    }
+
+    .vision-card__headline {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--red);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .vision-card__body {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--ink-soft);
+    }
+
+    .values {
+      margin-top: 3rem;
+    }
+
+    .values__title {
+      font-family: var(--font-display);
+      font-size: 1.375rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .values__list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .value-item {
+      text-align: center;
+      padding: 1.75rem 1rem;
+      background: var(--white);
+      border: 1px solid var(--divider);
+      transition: border-color .3s, transform .25s;
+    }
+
+    .value-item:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+    }
+
+    .value-item__symbol {
+      width: 36px;
+      height: 36px;
+      margin-inline: auto;
+      margin-bottom: 1rem;
+      border: 1.5px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .value-item__symbol svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .value-item__name {
+      font-family: var(--font-display);
+      font-size: 1.0625rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* ─────────────────────────────────────────
+       CONTACT
+    ───────────────────────────────────────── */
+    .contact {
+      padding-block: clamp(4rem, 9vw, 7rem);
+      background: var(--ink);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact .geo-bg::before { opacity: .35; }
+
+    .contact__inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: clamp(3rem, 7vw, 6rem);
+      align-items: center;
+    }
+
+    .contact .section-label { color: var(--gold); }
+    .contact .section-title { color: var(--white); }
+
+    .contact__lead {
+      font-size: 1.0625rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(253,252,251,.6);
+      margin-top: 1.25rem;
+    }
+
+    .contact__channels {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.625rem 1.75rem;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(201,162,39,.12);
+      text-decoration: none;
+      transition: background .3s, border-color .3s;
+    }
+
+    .contact-item:hover {
+      background: rgba(201,162,39,.08);
+      border-color: rgba(201,162,39,.3);
+    }
+
+    .contact-item__icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      background: rgba(201,162,39,.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .contact-item__icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .contact-item__label {
+      font-size: .6875rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,.7);
+      font-weight: 500;
+      margin-bottom: .25rem;
+    }
+
+    .contact-item__value {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--white);
+    }
+
+    /* ─────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────── */
+    .footer {
+      background: #0E0B0A;
+      padding-block: 2rem;
+      border-top: 1px solid rgba(201,162,39,.15);
+    }
+
+    .footer__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer__brand {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: .04em;
+    }
+
+    .footer__copy {
+      font-size: .8125rem;
+      color: rgba(253,252,251,.3);
+      font-weight: 300;
+    }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .about__inner   { grid-template-columns: 1fr; }
+      .expertise__inner { grid-template-columns: 1fr; }
+      .contact__inner { grid-template-columns: 1fr; }
+      .services__grid { grid-template-columns: repeat(2, 1fr); }
+      .values__list   { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      :root { --nav-h: 60px; }
+
+      .nav__links { display: none; }
+      .nav__toggle { display: flex; }
+
+      /* Simple mobile nav */
+      .nav__links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: var(--nav-h);
+        left: 0; right: 0;
+        background: var(--white);
+        border-bottom: 1px solid var(--divider);
+        padding: 1.25rem 1.5rem;
+        gap: 1.25rem;
+        box-shadow: 0 8px 24px rgba(0,0,0,.1);
+      }
+
+      .services__grid { grid-template-columns: 1fr; }
+      .vision__grid   { grid-template-columns: 1fr; }
+      .values__list   { grid-template-columns: repeat(2, 1fr); }
+
+      .hero__vertical { display: none; }
+
+      .about__logo { max-width: 200px; }
     }
   </style>
 </head>
-<body>
-  <div class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <strong>Citiscape Operations Control Book</strong>
-        <span>Consolidated current controls + enhancement proposal (not a replacement of existing policy controls)</span>
-      </div>
-      <div class="nav-tabs" id="navTabs"></div>
-    </div>
-  </div>
 
-  <div class="shell">
-    <section class="hero">
-      <div class="hero-grid">
+<body>
+
+  <!-- ─── NAVIGATION ─────────────────────── -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav__inner">
+
+      <a href="#home" class="nav__brand" aria-label="Insight Middle East Consulting – Home">
+        <img src="images/icon.png" alt="Insight ME Icon" class="nav__icon" />
+        <img src="images/logo.png" alt="Insight Middle East Consulting" class="nav__logo" />
+      </a>
+
+      <ul class="nav__links" id="navLinks" role="list">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#expertise">Expertise</a></li>
+        <li><a href="#vision">Vision</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+    </div>
+  </nav>
+
+
+  <!-- ─── HERO ───────────────────────────── -->
+  <section class="hero" id="home">
+    <div class="geo-bg" aria-hidden="true"></div>
+    <div class="hero__rule" aria-hidden="true"></div>
+    <div class="container hero__content">
+
+      <div class="hero__eyebrow" aria-hidden="true">
+        <span class="hero__eyebrow-line"></span>
+        <span class="hero__eyebrow-text">Abu Dhabi, United Arab Emirates</span>
+      </div>
+
+      <h1 class="hero__headline">
+        <strong>Insight<br>Middle East</strong>
+        <em>Consulting</em>
+      </h1>
+
+      <p class="hero__subtitle">Human Resources Consultancy — Shaping Organisations, Empowering People</p>
+
+      <a href="#contact" class="hero__cta">
+        Book a Consultation
+        <span class="hero__cta-arrow" aria-hidden="true">→</span>
+      </a>
+
+    </div>
+    <span class="hero__vertical" aria-hidden="true">Strategic HR Solutions · Abu Dhabi · UAE</span>
+  </section>
+
+
+  <!-- ─── ABOUT ──────────────────────────── -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about__inner">
+
+        <div class="about__left">
+          <div class="about__logo-wrap">
+            <img src="images/logo.png" alt="Insight Middle East Consulting" class="about__logo" />
+
+            <div class="about__badge">
+              <span class="about__badge-label">Commercial License</span>
+              <span class="about__badge-value">Abu Dhabi, UAE</span>
+            </div>
+
+            <div class="about__badge">
+              <span class="about__badge-label">Owner &amp; Managing Consultant</span>
+              <span class="about__badge-value">Mohamed Khairy</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about__right">
+          <span class="section-label">Who We Are</span>
+          <h2 class="section-title">A trusted partner in <em>HR excellence</em></h2>
+
+          <p class="about__intro">
+            Building organisations where people thrive and businesses perform.
+          </p>
+
+          <p class="about__text">
+            Insight Middle East Consulting is a licensed Human Resources consultancy headquartered in Abu Dhabi. We partner with organisations across the UAE and the wider Middle East to design HR systems that are strategic, scalable, and aligned with business objectives.
+          </p>
+          <p class="about__text">
+            Led by senior HR professional Mohamed Khairy, our practice draws on deep regional expertise and a rigorous consulting methodology — delivering measurable outcomes in workforce planning, structural redesign, and organisational capability.
+          </p>
+
+          <div class="about__meta">
+            <div class="about__meta-item">
+              <span class="about__meta-label">Specialisation</span>
+              <span class="about__meta-value">Human Resources</span>
+            </div>
+            <div class="about__meta-item">
+              <span class="about__meta-label">Region</span>
+              <span class="about__meta-value">UAE &amp; Middle East</span>
+            </div>
+            <div class="about__meta-item">
+              <span class="about__meta-label">Base</span>
+              <span class="about__meta-value">Abu Dhabi</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─── SERVICES ───────────────────────── -->
+  <section class="services" id="services">
+    <div class="container">
+
+      <div class="services__head">
         <div>
-          <h1>Consolidated Web Book — Existing Controls Confirmed, Enhancement Proposal Highlighted</h1>
-          <p class="lead">
-            This single web page merges the uploaded control designs into one book-like interface with chapter navigation. It explicitly confirms that Citiscape already has control measures in place under the current Operations Policies & Procedures baseline, and that the content marked in this book is an <strong>enhancement proposal</strong> to strengthen visibility, exception handling, and cross-functional governance — <strong>not a restart from scratch</strong>.
+          <span class="section-label">What We Offer</span>
+          <h2 class="section-title">Core <em>Services</em></h2>
+        </div>
+        <div class="services__count" aria-hidden="true">06</div>
+      </div>
+
+      <div class="services__grid">
+
+        <article class="service-card">
+          <div class="service-card__num" aria-hidden="true">01</div>
+          <h3 class="service-card__title">HR Consultancy</h3>
+          <p class="service-card__body">Strategic advisory services tailored to the unique needs of organisations operating in the Gulf region — from HR audits and gap analysis to full-cycle transformation support.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-card__num" aria-hidden="true">02</div>
+          <h3 class="service-card__title">Organisational Structure Development</h3>
+          <p class="service-card__body">Designing lean, effective organisational structures that align reporting lines, clarify accountability, and support strategic growth.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-card__num" aria-hidden="true">03</div>
+          <h3 class="service-card__title">Policies &amp; Procedures</h3>
+          <p class="service-card__body">Developing comprehensive HR policies and procedural frameworks that ensure compliance, consistency, and operational efficiency across the enterprise.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-card__num" aria-hidden="true">04</div>
+          <h3 class="service-card__title">Job Analysis &amp; Job Descriptions</h3>
+          <p class="service-card__body">Rigorous job evaluation methodologies that produce precise, legally sound job descriptions — the foundation of equitable grading and talent acquisition.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-card__num" aria-hidden="true">05</div>
+          <h3 class="service-card__title">Performance Evaluation Systems</h3>
+          <p class="service-card__body">Building robust performance management frameworks — KPIs, competency models, and appraisal cycles — that drive accountability and recognise excellence.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-card__num" aria-hidden="true">06</div>
+          <h3 class="service-card__title">Training &amp; Development Programs</h3>
+          <p class="service-card__body">Designing targeted learning interventions and competency-based development programmes that build capability and support succession planning.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─── EXPERTISE ──────────────────────── -->
+  <section class="expertise" id="expertise">
+    <div class="geo-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="expertise__inner">
+
+        <div class="expertise__left">
+          <span class="section-label">Our Depth</span>
+          <h2 class="section-title">Where strategy meets <em>execution</em></h2>
+          <p class="expertise__desc">
+            Insight Middle East brings more than consulting — we bring a proven capacity to translate HR strategy into operational reality. With extensive experience in complex, multi-level organisations across public and private sectors, our team navigates regulatory frameworks, cultural dynamics, and technical requirements with equal fluency.
+          </p>
+          <p class="expertise__desc" style="margin-top:1rem;">
+            Our approach is built on evidence, structured methodology, and a genuine commitment to client outcomes. We do not offer templates; we engineer solutions.
           </p>
         </div>
-        <div class="hero-side">
-          <div class="status-card baseline">
-            <div class="label">Confirmed Position</div>
-            <div class="value">Current Controls Already Exist</div>
-            <div class="sub">Policy-based controls remain the baseline: approvals, forms, inspections, timesheets, and verification loops are already in force.</div>
+
+        <div class="expertise__right">
+          <div class="expertise__pillars">
+
+            <div class="pillar">
+              <div class="pillar__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              </div>
+              <div>
+                <div class="pillar__title">HR Transformation</div>
+                <div class="pillar__sub">End-to-end restructuring of HR functions and systems</div>
+              </div>
+            </div>
+
+            <div class="pillar">
+              <div class="pillar__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              </div>
+              <div>
+                <div class="pillar__title">Workforce Planning</div>
+                <div class="pillar__sub">Headcount modelling, succession, and talent pipelines</div>
+              </div>
+            </div>
+
+            <div class="pillar">
+              <div class="pillar__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+              </div>
+              <div>
+                <div class="pillar__title">Competency Mapping</div>
+                <div class="pillar__sub">Behavioural frameworks aligned to strategic objectives</div>
+              </div>
+            </div>
+
+            <div class="pillar">
+              <div class="pillar__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div>
+                <div class="pillar__title">Organisational Culture</div>
+                <div class="pillar__sub">Culture diagnostics, values alignment, and change management</div>
+              </div>
+            </div>
+
           </div>
-          <div class="status-card enhancement">
-            <div class="label">Document Purpose</div>
-            <div class="value">Enhancement Proposal Only</div>
-            <div class="sub">Enhancements focus on dashboards, visibility, tighter exception triggers, and a cleaner end-to-end executive view.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─── VISION & MISSION ───────────────── -->
+  <section class="vision" id="vision">
+    <div class="container">
+
+      <span class="section-label">Our Purpose</span>
+      <h2 class="section-title">Vision &amp; <em>Mission</em></h2>
+
+      <div class="vision__grid">
+
+        <div class="vision-card">
+          <div class="vision-card__type">Vision</div>
+          <h3 class="vision-card__headline">To be the region's most trusted HR partner.</h3>
+          <p class="vision-card__body">
+            We aspire to lead HR consultancy in the Middle East — setting the standard for strategic insight, ethical practice, and measurable impact across every engagement.
+          </p>
+        </div>
+
+        <div class="vision-card">
+          <div class="vision-card__type">Mission</div>
+          <h3 class="vision-card__headline">Enabling organisations to unlock human potential.</h3>
+          <p class="vision-card__body">
+            Our mission is to deliver practical, evidence-based HR solutions that strengthen organisational performance, develop people capability, and support sustainable growth across the UAE and the wider region.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="values">
+        <h3 class="values__title">
+          <span class="section-label" style="display:block;text-align:center;margin-bottom:.5rem;">Our Core Values</span>
+        </h3>
+        <div class="values__list">
+
+          <div class="value-item">
+            <div class="value-item__symbol" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+            </div>
+            <div class="value-item__name">Professionalism</div>
           </div>
+
+          <div class="value-item">
+            <div class="value-item__symbol" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div class="value-item__name">Confidentiality</div>
+          </div>
+
+          <div class="value-item">
+            <div class="value-item__symbol" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            </div>
+            <div class="value-item__name">Innovation</div>
+          </div>
+
+          <div class="value-item">
+            <div class="value-item__symbol" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+            </div>
+            <div class="value-item__name">Results</div>
+          </div>
+
         </div>
       </div>
-    </section>
 
-    <div class="chapters">
-      <section class="chapter active" id="chapter-executive" data-title="Executive Summary" data-page="Chapter 1">
-        <div class="chapter-header">
-          <div class="chapter-title-row">
-            <div>
-              <h2>Executive Summary & Positioning Statement</h2>
-              <p class="chapter-sub">This opening page clarifies what already exists in policy and where the proposed enhancements strengthen the same control environment without replacing it.</p>
-            </div>
-            <div class="page-badge">Chapter 1</div>
-          </div>
-        </div>
-        <div class="chapter-body">
-          <div class="exec-grid">
-            <div class="exec-panel">
-              <h3>Current Baseline Controls Already in Place</h3>
-              <ul>
-                <li><strong>Diesel:</strong> demand planning, PR / PO authorization, intake verification, issuance form, status gate, and manager reconciliation already exist in the diesel control process.</li>
-                <li><strong>Equipment:</strong> equipment requisition, owned-first availability check, outsourced document verification, receiving inspection, HSE release, timesheet maintenance, PM approval, and Logistics verification already exist in the current policy control chain.</li>
-                <li><strong>Outsourced Manpower:</strong> legality verification, camp admission, attendance recording, Project review, PM approval, Logistics verification, and off-hire / transfer governance already exist in the manpower control baseline.</li>
-                <li><strong>Project Control Governance:</strong> budget validation is recognized as a necessary front-end governance gate to confirm whether demand is within BOQ / budget or requires variation handling before operational execution.</li>
-              </ul>
-            </div>
-            <div class="exec-panel">
-              <h3>Enhancement Proposal Focus</h3>
-              <ul>
-                <li>Add a more explicit executive-facing layer that visually distinguishes <strong>baseline controls</strong> from <strong>enhancement actions</strong>.</li>
-                <li>Consolidate Diesel, Equipment, and Manpower into one navigation model to improve management review and audit readiness.</li>
-                <li>Introduce exception visibility: idle assets, breakdowns, expiry risk, pending PM approvals, pending Logistics verifications, and variation / budget hold status.</li>
-                <li>Keep the current policy flow intact while strengthening monitoring, decision speed, and accountability across Project Control, Projects, Logistics, and management.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="exec-panel" style="margin-top:18px;">
-            <h3>Legend — How to Read This Book</h3>
-            <div class="legend">
-              <div class="legend-card"><strong>Baseline</strong><span>Policy control already in place</span></div>
-              <div class="legend-card"><strong>Enhancement</strong><span>Additional strengthening proposal</span></div>
-              <div class="legend-card"><strong>Gate</strong><span>Mandatory approval / validation point</span></div>
-              <div class="legend-card"><strong>Closed Loop</strong><span>Reconciliation / audit / verification step</span></div>
-            </div>
-          </div>
-
-          <div class="exec-panel" style="margin-top:18px;">
-            <h3>Enhancement Matrix (Consolidated)</h3>
-            <table class="enh-matrix">
-              <thead>
-                <tr>
-                  <th>Topic</th>
-                  <th>Current Control in Place</th>
-                  <th>Enhancement Proposal</th>
-                  <th>Management Benefit</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Diesel</strong></td>
-                  <td>PR / PO, intake check, issuance form, daily distribution log, manager reconciliation.<small>Baseline retained.</small></td>
-                  <td>Add consolidated visual exception layer for blocked assets, abnormal consumption, and monthly closed-loop audit visibility.</td>
-                  <td>Faster leakage detection, stronger audit trace, clearer operational accountability.</td>
-                </tr>
-                <tr>
-                  <td><strong>Equipment</strong></td>
-                  <td>ERF, owned-first logic, outsourced receiving control, PM approval, LO verification, transfer / off-hire route.<small>Baseline retained.</small></td>
-                  <td>Add visible Project Control budget gate, utilization dashboard, and exception signals for idle / breakdown / hold / variation.</td>
-                  <td>Protects budget, reduces rental leakage, improves decision timing.</td>
-                </tr>
-                <tr>
-                  <td><strong>Manpower</strong></td>
-                  <td>Legality control, camp check-in, timesheet chain, PM approval, Logistics verification, off-hire route.<small>Baseline retained.</small></td>
-                  <td>Add expiry alerting, over-deployment / absence visibility, and billing-readiness dashboard without changing the approval chain.</td>
-                  <td>Improves compliance, reduces payroll / supplier billing dispute risk, supports camp governance.</td>
-                </tr>
-                <tr>
-                  <td><strong>Executive Review</strong></td>
-                  <td>Controls exist in separate procedures and forms.<small>Baseline retained.</small></td>
-                  <td>Merge all topics into one book-style navigation page for faster board / management review and audit presentation.</td>
-                  <td>Better readability, single source of visual governance, simpler sign-off discussion.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="footer-nav">
-            <button onclick="showChapter('chapter-diesel')">Go to Diesel Chapter →</button>
-            <button onclick="showChapter('chapter-equipment')">Go to Equipment Chapter →</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="chapter" id="chapter-diesel" data-title="Diesel Control" data-page="Chapter 2">
-        <div class="chapter-header">
-          <div class="chapter-title-row">
-            <div>
-              <h2>Diesel Control Chapter</h2>
-              <p class="chapter-sub">Current diesel controls are already established. This chapter presents the consolidated control view and highlights the proposed enhancements only.</p>
-            </div>
-            <div class="page-badge">Chapter 2</div>
-          </div>
-        </div>
-        <div class="chapter-body">
-          <div class="baseline-enhancement-grid">
-            <div class="note-card baseline">
-              <h3>Current Control in Place</h3>
-              <ul>
-                <li>Monthly consumption planning and controlled PR / PO route.</li>
-                <li>Bulk tanker intake verification and discrepancy correction before storage.</li>
-                <li>Asset eligibility gate before issuing diesel to owned or approved rental equipment.</li>
-                <li>Daily log, matrix entry, diagnostics, and manager reconciliation loop.</li>
-              </ul>
-            </div>
-            <div class="note-card enh">
-              <h3>Enhancement Proposal</h3>
-              <ul>
-                <li>Keep the current forms and approvals unchanged.</li>
-                <li>Enhance blocked asset visibility, abnormal consumption flags, and consolidated management review view.</li>
-                <li>Present the same policy control more clearly for audit and executive tracking.</li>
-              </ul>
-            </div>
-          </div>
-          <div class="iframe-wrap">
-            <div class="iframe-toolbar">
-              <div>Embedded Chapter View</div>
-              <div class="toolbar-tags">
-                <span class="toolbar-tag">Existing Baseline</span>
-                <span class="toolbar-tag">Enhancement Highlighted</span>
-                <span class="toolbar-tag">No Restart from Scratch</span>
-              </div>
-            </div>
-            <iframe id="frame-diesel" class="chapter-frame" title="Diesel Control Chapter"></iframe>
-          </div>
-          <div class="footer-nav">
-            <button onclick="showChapter('chapter-executive')">← Back to Executive Summary</button>
-            <button onclick="showChapter('chapter-equipment')">Go to Equipment Chapter →</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="chapter" id="chapter-equipment" data-title="Equipment Control" data-page="Chapter 3">
-        <div class="chapter-header">
-          <div class="chapter-title-row">
-            <div>
-              <h2>Equipment Control Chapter</h2>
-              <p class="chapter-sub">This chapter consolidates the equipment control page and explicitly confirms that the process starts from current policy controls, with enhancements layered on top.</p>
-            </div>
-            <div class="page-badge">Chapter 3</div>
-          </div>
-        </div>
-        <div class="chapter-body">
-          <div class="baseline-enhancement-grid">
-            <div class="note-card baseline">
-              <h3>Current Control in Place</h3>
-              <ul>
-                <li>Equipment demand route, owned-first validation, outsourced route if unavailable.</li>
-                <li>Project Control budget gate positioned as a front-end governance check.</li>
-                <li>Legal verification, inspection, HSE release, timesheet chain, PM approval, and Logistics verification.</li>
-                <li>Transfer / off-hire route and closed-loop audit logic already recognized in the control model.</li>
-              </ul>
-            </div>
-            <div class="note-card enh">
-              <h3>Enhancement Proposal</h3>
-              <ul>
-                <li>Do not replace ERF, PM, or Logistics approvals.</li>
-                <li>Enhance visual management of idle units, variation status, blocked conditions, and consolidated utilization reporting.</li>
-                <li>Strengthen visibility between Project Control, Projects, and Logistics without changing the approval foundation.</li>
-              </ul>
-            </div>
-          </div>
-          <div class="iframe-wrap">
-            <div class="iframe-toolbar">
-              <div>Embedded Chapter View</div>
-              <div class="toolbar-tags">
-                <span class="toolbar-tag">Project Control Gate</span>
-                <span class="toolbar-tag">Timesheet Chain</span>
-                <span class="toolbar-tag">Enhancement Proposal</span>
-              </div>
-            </div>
-            <iframe id="frame-equipment" class="chapter-frame" title="Equipment Control Chapter"></iframe>
-          </div>
-          <div class="footer-nav">
-            <button onclick="showChapter('chapter-diesel')">← Back to Diesel Chapter</button>
-            <button onclick="showChapter('chapter-manpower')">Go to Manpower Chapter →</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="chapter" id="chapter-manpower" data-title="Manpower Control" data-page="Chapter 4">
-        <div class="chapter-header">
-          <div class="chapter-title-row">
-            <div>
-              <h2>Outsourced Manpower Control Chapter</h2>
-              <p class="chapter-sub">This chapter is built directly on the policy baseline and presented in the same visual language to complete the single web book accurately.</p>
-            </div>
-            <div class="page-badge">Chapter 4</div>
-          </div>
-        </div>
-        <div class="chapter-body">
-          <div class="baseline-enhancement-grid">
-            <div class="note-card baseline">
-              <h3>Current Control in Place</h3>
-              <ul>
-                <li>Legality verification before camp / project deployment.</li>
-                <li>Camp admission, accommodation allocation, and signed instructions.</li>
-                <li>Timekeeper → Project RAS → PM → Logistics verification chain for manpower timesheets.</li>
-                <li>Off-hire / transfer remains controlled with PM / LM and supplier coordination.</li>
-              </ul>
-            </div>
-            <div class="note-card enh">
-              <h3>Enhancement Proposal</h3>
-              <ul>
-                <li>Retain the existing approvals and supplier control chain.</li>
-                <li>Add expiry alerts, attendance exceptions, over-deployment visibility, and billing-readiness monitoring.</li>
-                <li>Present manpower control in the same executive-ready style as diesel and equipment.</li>
-              </ul>
-            </div>
-          </div>
-          <div class="iframe-wrap">
-            <div class="iframe-toolbar">
-              <div>Embedded Chapter View</div>
-              <div class="toolbar-tags">
-                <span class="toolbar-tag">Legality Baseline</span>
-                <span class="toolbar-tag">Attendance Chain</span>
-                <span class="toolbar-tag">Enhanced Visibility</span>
-              </div>
-            </div>
-            <iframe id="frame-manpower" class="chapter-frame" title="Manpower Control Chapter"></iframe>
-          </div>
-          <div class="footer-nav">
-            <button onclick="showChapter('chapter-equipment')">← Back to Equipment Chapter</button>
-            <button onclick="showChapter('chapter-executive')">Return to Executive Summary</button>
-          </div>
-        </div>
-      </section>
     </div>
-  </div>
+  </section>
 
+
+  <!-- ─── CONTACT ─────────────────────────── -->
+  <section class="contact" id="contact">
+    <div class="geo-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="contact__inner">
+
+        <div>
+          <span class="section-label">Get in Touch</span>
+          <h2 class="section-title">Let's talk about<br><em>your organisation</em></h2>
+          <p class="contact__lead">
+            Whether you are looking to transform your HR function, build capability, or simply explore what's possible — we welcome the conversation.
+          </p>
+        </div>
+
+        <div class="contact__channels">
+
+          <a href="tel:+971526713987" class="contact-item" aria-label="Call us">
+            <div class="contact-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.63 11 19.79 19.79 0 01.57 2.38 2 2 0 012.54.2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.09A16 16 0 0015.91 17l1.45-1.45a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <div class="contact-item__label">Phone</div>
+              <div class="contact-item__value">+971 52 671 3987</div>
+            </div>
+          </a>
+
+          <a href="mailto:info@insight-me.ae" class="contact-item" aria-label="Email us">
+            <div class="contact-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="contact-item__label">Email</div>
+              <div class="contact-item__value">info@insight-me.ae</div>
+            </div>
+          </a>
+
+          <a href="https://insight-me.ae" class="contact-item" target="_blank" rel="noopener" aria-label="Visit our website">
+            <div class="contact-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+            </div>
+            <div>
+              <div class="contact-item__label">Website</div>
+              <div class="contact-item__value">insight-me.ae</div>
+            </div>
+          </a>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─── FOOTER ──────────────────────────── -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span class="footer__brand">Insight Middle East Consulting</span>
+      <span class="footer__copy">&copy; 2025 Insight Middle East Consulting. Abu Dhabi, UAE. All rights reserved.</span>
+    </div>
+  </footer>
+
+
+  <!-- ─── MINIMAL JS: mobile nav only ─────── -->
   <script>
-    const chapters = [
-      { id: 'chapter-executive', title: 'Executive Summary' },
-      { id: 'chapter-diesel', title: 'Diesel Control' },
-      { id: 'chapter-equipment', title: 'Equipment Control' },
-      { id: 'chapter-manpower', title: 'Manpower Control' }
-    ];
-
-    const chapterDocs = {"executive": "", "diesel": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Citiscape L.L.C. - Advanced Diesel Management & Control System</title>\n    <style>\n        :root {\n            --primary-blue: #009cd3;      /* Citiscape Corporate Sky Blue */\n            --dark-navy: #0f172a;         /* Deep Premium Slate Blue */\n            --accent-orange: #f97316;     /* Vivid Control Point Orange */\n            --owned-green: #16a34a;       /* Corporate Asset Identification */\n            --rental-purple: #7c3aed;     /* Rental Contract Identification */\n            --breakdown-red: #dc2626;     /* Broken down / Inactive Asset Block */\n            --bg-canvas: #f1f5f9;\n            --surface-card: #ffffff;\n            --text-main: #1e293b;\n            --text-muted: #64748b;\n            --border-light: #cbd5e1;\n            --border-focus: #94a3b8;\n            --hse-bg: #fff5f5;\n            --hse-border: #ef4444;\n        }\n\n        *, *::before, *::after {\n            box-sizing: border-box;\n        }\n\n        body {\n            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;\n            background-color: var(--bg-canvas);\n            color: var(--text-main);\n            margin: 0;\n            padding: 25px;\n            line-height: 1.4;\n            -webkit-print-color-adjust: exact;\n            print-color-adjust: exact;\n        }\n\n        /* Fixed structural boundary optimized for A3 Landscape aspect ratios */\n        .dashboard-container {\n            width: 100%;\n            max-width: 1580px; \n            margin: 0 auto;\n            display: flex;\n            flex-direction: column;\n            gap: 20px;\n        }\n\n        /* Institutional Control Header */\n        .manual-header {\n            background: var(--surface-card);\n            border-left: 8px solid var(--primary-blue);\n            border-radius: 6px;\n            padding: 20px;\n            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.05);\n        }\n\n        .header-main-table {\n            display: table;\n            width: 100%;\n        }\n\n        .header-cell-title {\n            display: table-cell;\n            vertical-align: middle;\n        }\n\n        .header-cell-meta {\n            display: table-cell;\n            vertical-align: middle;\n            text-align: right;\n            width: 380px;\n            font-size: 0.82rem;\n            color: var(--text-muted);\n            line-height: 1.6;\n            border-left: 2px solid var(--border-light);\n            padding-left: 25px;\n        }\n\n        .manual-header h1 {\n            margin: 0;\n            font-size: 1.9rem;\n            color: var(--dark-navy);\n            letter-spacing: -0.5px;\n            font-weight: 800;\n        }\n\n        .manual-header p.subtitle {\n            margin: 4px 0 0 0;\n            font-size: 1rem;\n            color: var(--text-muted);\n            font-weight: 600;\n        }\n\n        /* Process Swimlanes Block Layout */\n        .swimlane-section {\n            background: var(--surface-card);\n            border: 1px solid var(--border-light);\n            border-radius: 8px;\n            padding: 20px;\n            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.02);\n        }\n\n        .section-title {\n            font-size: 1.2rem;\n            font-weight: 800;\n            color: var(--dark-navy);\n            margin-top: 0;\n            margin-bottom: 15px;\n            border-bottom: 2px solid var(--border-light);\n            padding-bottom: 6px;\n            text-transform: uppercase;\n            letter-spacing: 0.5px;\n        }\n\n        .swimlane-table {\n            width: 100%;\n            border-collapse: collapse;\n        }\n\n        .lane-row {\n            border-bottom: 1px solid var(--border-light);\n        }\n\n        .lane-row:last-child {\n            border-bottom: none;\n        }\n\n        .lane-identity {\n            width: 12%;\n            background-color: var(--dark-navy);\n            color: #ffffff;\n            font-weight: 700;\n            text-transform: uppercase;\n            font-size: 0.78rem;\n            letter-spacing: 0.8px;\n            text-align: center;\n            vertical-align: middle;\n            padding: 15px;\n            line-height: 1.5;\n        }\n\n        .lane-flow-cells {\n            width: 88%;\n            padding: 15px 15px 0 15px;\n            vertical-align: top;\n            text-align: left;\n        }\n\n        .lane-officer-bg { background-color: #f8fafc; }\n        .lane-driver-bg { background-color: #fffdf5; }\n        .lane-manager-bg { background-color: #f8fafc; }\n\n        /* Fixed card overlap layout system using flex column heights instead of absolute bugs */\n        .process-node-container {\n            display: inline-block;\n            vertical-align: top;\n            margin-right: 14px;\n            margin-bottom: 15px;\n        }\n\n        .process-card {\n            background: var(--surface-card);\n            border: 1px solid var(--border-light);\n            border-radius: 6px;\n            width: 285px;\n            padding: 14px;\n            box-shadow: 0 2px 5px rgba(0,0,0,0.03);\n            display: flex;\n            flex-direction: column;\n            justify-content: space-between;\n            min-height: 180px; /* Forces cards to align cleanly across the landscape row */\n            transition: all 0.2s ease-in-out;\n        }\n\n        .process-card:hover {\n            border-color: var(--primary-blue);\n            transform: translateY(-2px);\n            box-shadow: 0 6px 15px rgba(0, 156, 211, 0.12);\n        }\n\n        .card-content-top {\n            width: 100%;\n            margin-bottom: 12px;\n        }\n\n        .card-header-row {\n            display: flex;\n            justify-content: space-between;\n            align-items: center;\n            margin-bottom: 8px;\n        }\n\n        .node-tag-control {\n            background: #ffedd5;\n            color: #ea580c;\n            font-size: 0.68rem;\n            font-weight: 800;\n            padding: 2px 8px;\n            border-radius: 4px;\n            text-transform: uppercase;\n            letter-spacing: 0.3px;\n        }\n\n        .node-tag-owned { background: #dcfce7; color: var(--owned-green); }\n        .node-tag-rental { background: #f3e8ff; color: var(--rental-purple); }\n        .node-tag-gatekeeper { background: #fee2e2; color: #b91c1c; }\n\n        .node-step-index {\n            font-size: 0.72rem;\n            font-weight: 800;\n            color: var(--text-muted);\n            background: #f1f5f9;\n            padding: 2px 6px;\n            border-radius: 4px;\n        }\n\n        .node-headline {\n            font-weight: 700;\n            font-size: 0.95rem;\n            color: var(--dark-navy);\n            margin-bottom: 5px;\n        }\n\n        .node-body-text {\n            font-size: 0.78rem;\n            color: #475569;\n            line-height: 1.4;\n        }\n\n        .node-output-badge {\n            font-size: 0.72rem;\n            font-weight: 700;\n            background: #f1f5f9;\n            color: #334155;\n            padding: 4px 8px;\n            border-radius: 4px;\n            border-left: 3px solid var(--primary-blue);\n            display: block;\n            width: 100%;\n            margin-top: auto; /* Aligns perfectly to bottom regardless of content text block length */\n        }\n\n        /* Dual Document Grid Block Layout */\n        .system-forms-section {\n            width: 100%;\n        }\n\n        .dual-grid-row {\n            display: table;\n            width: 100%;\n            table-layout: fixed;\n            border-spacing: 20px 0;\n        }\n\n        .grid-column-half {\n            display: table-cell;\n            vertical-align: top;\n            background: var(--surface-card);\n            border: 1px solid var(--border-light);\n            border-radius: 8px;\n            padding: 20px;\n            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.02);\n        }\n\n        .form-header-title {\n            font-size: 1.1rem;\n            font-weight: 800;\n            color: var(--dark-navy);\n            margin-top: 0;\n            margin-bottom: 12px;\n            text-transform: uppercase;\n            letter-spacing: 0.3px;\n            border-bottom: 2px solid var(--primary-blue);\n            padding-bottom: 5px;\n        }\n\n        /* Application Form Data Tables */\n        .app-data-table {\n            width: 100%;\n            border-collapse: collapse;\n            font-size: 0.74rem;\n        }\n\n        .app-data-table th {\n            background-color: #f1f5f9;\n            color: var(--dark-navy);\n            font-weight: 700;\n            border: 1px solid var(--border-light);\n            padding: 8px 6px;\n            text-transform: uppercase;\n            font-size: 0.7rem;\n            letter-spacing: 0.3px;\n        }\n\n        .app-data-table td {\n            border: 1px solid var(--border-light);\n            padding: 8px 6px;\n            color: #334155;\n            vertical-align: middle;\n        }\n\n        .row-owned-indicator {\n            border-left: 4px solid var(--owned-green) !important;\n            font-weight: 600;\n        }\n\n        .row-rental-indicator {\n            border-left: 4px solid var(--rental-purple) !important;\n            font-weight: 600;\n        }\n\n        .badge-status {\n            display: inline-block;\n            padding: 2px 6px;\n            border-radius: 4px;\n            font-weight: 800;\n            font-size: 0.65rem;\n            text-transform: uppercase;\n        }\n        .status-owned { background: #e8f5e9; color: var(--owned-green); }\n        .status-rental { background: #f3e8ff; color: var(--rental-purple); }\n\n        .badge-op {\n            display: inline-block;\n            padding: 2px 5px;\n            border-radius: 4px;\n            font-weight: 700;\n            font-size: 0.63rem;\n            text-transform: uppercase;\n        }\n        .op-active { background: #dcfce7; color: #15803d; }\n        .op-breakdown { background: #fee2e2; color: #b91c1c; }\n        .op-idle { background: #fef3c7; color: #b45309; }\n\n        .table-total-row {\n            background-color: #f8fafc;\n            font-weight: 700;\n        }\n\n        .table-total-row td {\n            color: var(--dark-navy);\n            border-top: 2px solid var(--border-focus);\n            font-size: 0.78rem;\n        }\n\n        .sign-off-footer-block {\n            margin-top: 20px;\n            padding-top: 15px;\n            border-top: 1px dashed var(--border-light);\n            font-size: 0.78rem;\n            display: flex;\n            justify-content: space-between;\n        }\n\n        .sign-signature-line {\n            width: 48%;\n        }\n\n        /* Regulatory Callout Footer */\n        .hse-compliance-callout {\n            background-color: var(--hse-bg);\n            border: 1px solid #fee2e2;\n            border-left: 6px solid var(--hse-border);\n            border-radius: 6px;\n            padding: 15px;\n        }\n\n        .hse-compliance-callout h4 {\n            margin: 0 0 5px 0;\n            color: #b91c1c;\n            font-size: 0.95rem;\n            font-weight: 800;\n            text-transform: uppercase;\n            letter-spacing: 0.5px;\n        }\n\n        .hse-compliance-callout p {\n            margin: 0;\n            font-size: 0.8rem;\n            color: #991b1b;\n            line-height: 1.4;\n        }\n\n        .scrollable-table-wrapper {\n            width: 100%;\n            overflow-x: auto;\n        }\n\n        /* STYLING RULES SPECIFICALLY FOR A3 PRINT CONFIGURATIONS */\n        @media print {\n            @page {\n                size: A3 landscape;\n                margin: 15mm;\n            }\n            body {\n                background-color: #ffffff;\n                padding: 0;\n            }\n            .dashboard-container {\n                max-width: 100%;\n                gap: 15px;\n            }\n            .process-card {\n                width: 275px; \n                min-height: 195px;\n            }\n            .swimlane-section, .grid-column-half, .manual-header {\n                box-shadow: none !important;\n            }\n        }\n    </style>\n</head>\n<body>\n\n    <div class=\"dashboard-container\">\n\n        <div class=\"manual-header\">\n            <div class=\"header-main-table\">\n                <div class=\"header-cell-title\">\n                    <h1>Procedure 8.4.5: Diesel Optimization & Control Hierarchy</h1>\n                    <p class=\"subtitle\">Operations Policies & Procedures Manual — Logistics, Warehouse & Fleet Resource Framework</p>\n                </div>\n                <div class=\"header-cell-meta\">\n                    <strong>Institution:</strong> Citiscape L.L.C.<br>\n                    <strong>Document Tracking ID:</strong> CS-OPS-LWM-8.4.5<br>\n                    <strong>System Status:</strong> Version R3 (Optimized) | <strong>Issue Date:</strong> 04.06.2026<br>\n                    <strong>Core Scope:</strong> Corporate Fleet Assets & Contractual Rental Governance\n                </div>\n            </div>\n        </div>\n\n        <div class=\"swimlane-section\">\n            <h2 class=\"section-title\">Standard Operating Control Flow</h2>\n            \n            <table class=\"swimlane-table\">\n                \n                <tr class=\"lane-row\">\n                    <td class=\"lane-identity lane-officer-bg\" style=\"color: var(--dark-navy);\">Logistics<br>Officer</td>\n                    <td class=\"lane-flow-cells\">\n                        \n                        <div class=\"process-node-container\">\n                            <div class=\"process-card\">\n                                <div class=\"card-content-top\">\n                                    <div class=\"card-header-row\">\n                                        <span class=\"node-tag-control\">Demand Gate</span>\n                                        <span class=\"node-step-index\">1.1</span>\n                                    </div>\n                                    <div class=\"node-headline\">Consumption Planning</div>\n                                    <div class=\"node-body-text\">Analyze monthly jobsite targets based strictly on verified active asset/Equipment lists and run-hour estimates.</div>\n                                </div>\n                                <span class=\"node-output-badge\">📋 Purchase Requisition (PR)</span>\n                            </div>\n                        </div>\n\n                        <div class=\"process-node-container\">\n                            <div class=\"process-card\">\n                                <div class=\"card-content-top\">\n                                    <div class=\"card-header-row\">\n                                        <span class=\"node-tag-control\">Procurement</span>\n                                        <span class=\"node-step-index\">1.2</span>\n                                    </div>\n                                    <div class=\"node-headline\">PO Authorization</div>\n                                    <div class=\"node-body-text\">Issue volume-restricted POs aligning to specific project baseline/Budget calculations, stopping upstream waste.</div>\n                                </div>\n                                <span class=\"node-output-badge\">💳 Purchase Order (PO)</span>\n                            </div>\n                        </div>\n\n                        <div class=\"process-node-container\">\n                            <div class=\"process-card\">\n                                <div class=\"card-content-top\">\n                                    <div class=\"card-header-row\">\n                                        <span class=\"node-tag-control\">Intake Audit</span>\n                                        <span class=\"node-step-index\">1.3</span>\n                                    </div>\n                                    <div class=\"node-headline\">Bulk Tanker Intake</div>\n                                    <div class=\"node-body-text\">Confirm delivery details, test meter accuracy via 5-gallon container gauge, and record via counter.</div>\n                                </div>\n                                <span class=\"node-output-badge\">🚚 Delivery Note (DN)</span>\n                            </div>\n                        </div>\n\n                        <div class=\"process-node-container\">\n                            <div class=\"process-card\">\n                                <div class=\"card-content-top\">\n                                    <div class=\"card-header-row\">\n                                        <span class=\"node-tag-control\">Mitigation</span>\n                                        <span class=\"node-step-index\">1.4</span>\n                                    </div>\n                                    <div class=\"node-headline\">Variance Correction</div>\n                                    <div class=\"node-body-text\">If intake metrics diverge from supplier invoice, execute physical markdown updates prior to storage load.</div>\n                                </div>\n                                <span class=\"node-output-badge\">🔧 Discrepancy Adjustment Log</span>\n                            </div>\n                        </div>\n\n                    </td>\n                </tr>\n\n                <tr class=\"lane-row\">\n                    <td class=\"lane-identity lane-driver-bg\" style=\"color: #9a3412;\">Driver /<br>Timekeeper /<br>Storekeeper</td>\n                    <td class=\"lane-flow-cells\">\n                        \n                        <div class=\"process-node-container\">\n                            <div class=\"process-card\">\n                                <div class=\"card-content-top\">\n                                    <div class=\"card-header-row\">\n                                        <span class=\"node-tag-control\">Custody Link</span>\n                                        <span class=\"node-step-index\">2.1</span>\n                                    </div>\n                                    <div class=\"node-headline\">Internal Bowser Load</div>\n                                    <div class=\"node-body-text\">Driver signs structural fuel manifest verifying custody transfers of bulk diesel into operational tankers.</div>\n                                </div>\n                                <span class=\"node-output-badge\">✍️ Diesel Issuance Form</span>\n                            </div>\n                        </div>\n\n                        <div class=\"process-node-container\">\n                            <div class=\"process-card\">\n                                <div class=\"card-content-top\">\n                                    <div class=\"card-header-row\">\n                                        <span class=\"node-tag-control node-tag-gatekeeper\">Gatekeeper</span>\n                                        <span class=\"node-step-index\">2.2</span>\n                                    </div>\n                                    <div class=\"node-headline\">Asset Validation &amp; Status Gate</div>\n                                    <div class=\"node-body-text\">Identify Plate/Equipment Tag. Fuel <strong>ONLY</strong> if asset is Corporate/Approved Rental <strong>AND</strong> marked active. Immediately block breakdown or idle units.</div>\n                                </div>\n                                <span class=\"node-output-badge\">🔒 Eligibility &amp; Status Interlock Check</span>\n                            </div>\n                        </div>\n\n                        <div class=\"process-node-container\">\n                            <div class=\"process-card\">\n                                <div class=\"card-content-top\">\n                                    <div class=\"card-header-row\">\n                                        <span class=\"node-tag-control\">Logging</span>\n                                        <span class=\"node-step-index\">2.3</span>\n                                    </div>\n                                    <div class=\"node-headline\">Granular Point Issuance</div>\n                                    <div class=\"node-body-text\">Dispense fuel individually. Document exact volume metrics alongside current asset KM or hour telemetry.</div>\n                                </div>\n                                <span class=\"node-output-badge\">📊 Daily Distribution Log Entries</span>\n                            </div>\n                        </div>\n\n                    </td>\n                </tr>\n\n                <tr class=\"lane-row\">\n                    <td class=\"lane-identity lane-manager-bg\" style=\"color: var(--text-main);\">Logistics<br>Manager</td>\n                    <td class=\"lane-flow-cells\">\n                        \n                        <div class=\"process-node-container\">\n                            <div class=\"process-card\">\n                                <div class=\"card-content-top\">\n                                    <div class=\"card-header-row\">\n                                        <span class=\"node-tag-control\">Reconciliation</span>\n                                        <span class=\"node-step-index\">3.1</span>\n                                    </div>\n                                    <div class=\"node-headline\">Daily Matrix Entry</div>\n                                    <div class=\"node-body-text\">Digitize field distribution logs. Aggregate total allocation arrays sorted by specific project code tracking.</div>\n                                </div>\n                                <span class=\"node-output-badge\">📅 Diesel Distribution Report Matrix</span>\n                            </div>\n                        </div>\n\n                        <div class=\"process-node-container\">\n                            <div class=\"process-card\">\n                                <div class=\"card-content-top\">\n                                    <div class=\"card-header-row\">\n                                        <span class=\"node-tag-control\">Analysis</span>\n                                        <span class=\"node-step-index\">3.2</span>\n                                    </div>\n                                    <div class=\"node-headline\">Benchmark Diagnostics</div>\n                                    <div class=\"node-body-text\">Cross-reference fuel volumes consumed against hour run metrics to flag abnormalities and potential leakage.</div>\n                                </div>\n                                <span class=\"node-output-badge\">📈 Operational Consumption Report</span>\n                            </div>\n                        </div>\n\n                        <div class=\"process-node-container\">\n                            <div class=\"process-card\">\n                                <div class=\"card-content-top\">\n                                    <div class=\"card-header-row\">\n                                        <span class=\"node-tag-control\">Audit Block</span>\n                                        <span class=\"node-step-index\">3.3</span>\n                                    </div>\n                                    <div class=\"node-headline\">Monthly Closed Loop</div>\n                                    <div class=\"node-body-text\">Reconcile total bulk inventory PO pools, physical dips, and active project issuance tallies against historical ranges.</div>\n                                </div>\n                                <span class=\"node-output-badge\">🏁 Final Closed-Loop Ledger Audit</span>\n                            </div>\n                        </div>\n\n                    </td>\n                </tr>\n\n            </table>\n        </div>\n\n        <div class=\"system-forms-section\">\n            <div class=\"dual-grid-row\">\n                \n                <div class=\"grid-column-half\">\n                    <div class=\"form-header-title\">Diesel Issuance Form (With Asset Validation &amp; Status Gate)</div>\n                    <div class=\"form-header-meta\">\n                        <table style=\"width:100%; border:none; margin:0 0 10px 0; font-size:0.75rem;\">\n                            <tr style=\"background:none;\"><td style=\"border:none; padding:0;\"><strong>Bowser Fleet Vehicle:</strong> TR-092 / DV-10</td><td style=\"border:none; padding:0; text-align:right;\"><strong>Operational Date:</strong> ____________________</td></tr>\n                        </table>\n                    </div>\n                    \n                    <table class=\"app-data-table\">\n                        <thead>\n                            <tr>\n                                <th style=\"width: 22%;\">Asset ID (E/N #)</th>\n                                <th style=\"width: 18%;\">Ownership Status</th>\n                                <th style=\"width: 18%;\">Operational Status</th>\n                                <th style=\"width: 22%;\">Contract Fuel PO Ref</th>\n                                <th style=\"width: 10%;\">Dispensed Qty (L)</th>\n                                <th style=\"width: 10%;\">Telemetry (Km/Hr)</th>\n                            </tr>\n                        </thead>\n                        <tbody>\n                            <tr>\n                                <td class=\"row-owned-indicator\">EXC-210 (CAT 320)</td>\n                                <td><span class=\"badge-status status-owned\">Corporate Owned</span></td>\n                                <td><span class=\"badge-op op-active\">Active / Working</span></td>\n                                <td style=\"color: var(--text-muted); font-style: italic;\">Internal Fleet Cost</td>\n                                <td style=\"font-weight: 700; text-align: right;\">185.00</td>\n                                <td>4,321.5 Hrs</td>\n                            </tr>\n                            <tr>\n                                <td class=\"row-rental-indicator\">TRK-405 (Man Tipper)</td>\n                                <td><span class=\"badge-status status-rental\">Rental Asset</span></td>\n                                <td><span class=\"badge-op op-active\">Active / Working</span></td>\n                                <td>PO-2026-8831 (Eligible)</td>\n                                <td style=\"font-weight: 700; text-align: right;\">95.00</td>\n                                <td>124,850 Km</td>\n                            </tr>\n                            <tr>\n                                <td class=\"row-owned-indicator\">JCB-044 (Backhoe)</td>\n                                <td><span class=\"badge-status status-owned\">Corporate Owned</span></td>\n                                <td><span class=\"badge-op op-breakdown\">⚠️ Breakdown</span></td>\n                                <td style=\"color:#dc2626; font-weight:700;\">Blocked by Timekeeper</td>\n                                <td style=\"background:#fee2e2; color:#b91c1c; font-weight:800; text-align: right;\">0.00</td>\n                                <td style=\"background:#fee2e2; color:#b91c1c;\">8,910.2 Hrs</td>\n                            </tr>\n                            <tr>\n                                <td class=\"row-rental-indicator\">GEN-102 (Perkins 50k)</td>\n                                <td><span class=\"badge-status status-rental\">Rental Asset</span></td>\n                                <td><span class=\"badge-op op-idle\">Idle Sitting</span></td>\n                                <td style=\"color:#dc2626; font-weight:700;\">⚠️ Vendor Scope (Blocked)</td>\n                                <td style=\"background:#fee2e2; color:#b91c1c; font-weight:800; text-align: right;\">0.00</td>\n                                <td style=\"background:#fee2e2; color:#b91c1c;\">1,840.0 Hrs</td>\n                            </tr>\n                        </tbody>\n                    </table>\n\n                    <div class=\"sign-off-footer-block\">\n                        <div class=\"sign-signature-line\"><strong>Issuing Driver Name:</strong> ___________________________</div>\n                        <div class=\"sign-signature-line\"><strong>Authorized Site Signature:</strong> ___________________________</div>\n                    </div>\n                </div>\n\n                <div class=\"grid-column-half\">\n                    <div class=\"form-header-title\">Diesel Distribution Matrix Report</div>\n                    <div class=\"form-header-meta\">\n                        <table style=\"width:100%; border:none; margin:0 0 10px 0; font-size:0.75rem;\">\n                            <tr style=\"background:none;\"><td style=\"border:none; padding:0;\"><strong>Project Context:</strong> Yas Island Extension Project</td><td style=\"border:none; padding:0; text-align:right;\"><strong>Reporting Month:</strong> June 2026</td></tr>\n                        </table>\n                    </div>\n                    \n                    <div class=\"scrollable-table-wrapper\">\n                        <table class=\"app-data-table\">\n                            <thead>\n                                <tr>\n                                    <th>Vehicle / Machinery Unit</th>\n                                    <th>Ownership Class</th>\n                                    <th>Plate / Tag</th>\n                                    <th>UOM</th>\n                                    <th>D1</th>\n                                    <th>D2</th>\n                                    <th>D3</th>\n                                    <th>D4</th>\n                                    <th>D5..31</th>\n                                    <th style=\"background:#fff9db; width: 12%;\">Total Vol (L)</th>\n                                </tr>\n                            </thead>\n                            <tbody>\n                                <tr>\n                                    <td class=\"row-owned-indicator\">Excavator CAT-320</td>\n                                    <td>Corporate Owned</td>\n                                    <td style=\"font-family: monospace; font-weight: 600;\">EXC-210</td>\n                                    <td>Liters</td>\n                                    <td>185</td>\n                                    <td>0</td>\n                                    <td>190</td>\n                                    <td>180</td>\n                                    <td style=\"color: var(--text-muted);\">...</td>\n                                    <td style=\"font-weight:800; background:#fef9c3; text-align: right;\">555.00</td>\n                                </tr>\n                                <tr>\n                                    <td class=\"row-rental-indicator\">Man Tipper Truck</td>\n                                    <td>Approved Rental</td>\n                                    <td style=\"font-family: monospace; font-weight: 600;\">TRK-405</td>\n                                    <td>Liters</td>\n                                    <td>95</td>\n                                    <td>100</td>\n                                    <td>90</td>\n                                    <td>95</td>\n                                    <td style=\"color: var(--text-muted);\">...</td>\n                                    <td style=\"font-weight:800; background:#fef9c3; text-align: right;\">380.00</td>\n                                </tr>\n                                <tr>\n                                    <td class=\"row-owned-indicator\">JCB Backhoe Loader</td>\n                                    <td>Corporate Owned</td>\n                                    <td style=\"font-family: monospace; font-weight: 600;\">JCB-044</td>\n                                    <td>Liters</td>\n                                    <td>0</td>\n                                    <td>0</td>\n                                    <td>0</td>\n                                    <td>0</td>\n                                    <td style=\"color: var(--text-muted);\">...</td>\n                                    <td style=\"font-weight:800; background:#fee2e2; color:#b91c1c; text-align: right;\">0.00</td>\n                                </tr>\n                                <tr class=\"table-total-row\">\n                                    <td colspan=\"4\">DAILY AGGREGATED RUN LOG TOTALS</td>\n                                    <td>280</td>\n                                    <td>100</td>\n                                    <td>280</td>\n                                    <td>275</td>\n                                    <td style=\"color: var(--text-muted);\">...</td>\n                                    <td style=\"background:#fde047; color:var(--dark-navy); font-weight: 800; text-align: right;\">935.00</td>\n                                </tr>\n                            </tbody>\n                        </table>\n                    </div>\n\n                    <div class=\"sign-off-footer-block\">\n                        <div class=\"sign-signature-line\"><strong>Compiled By (Logistics Officer):</strong> _________________</div>\n                        <div class=\"sign-signature-line\"><strong>Audited By (Logistics Manager):</strong> _________________</div>\n                    </div>\n                </div>\n\n            </div>\n        </div>\n\n        <div class=\"hse-compliance-callout\">\n            <h4>Mandatory Environmental, Safety & Legal Directives</h4>\n            <p>Diesel fuel represents a high-risk flammable hazardous compound. All site execution depots, distribution mobile bowsers, on-site storage facilities, and fuel dispensing apparatus operations must be strictly maintained in compliance with regional HSE directives, municipal environmental laws, and company industrial security regulations. Unauthorized asset fueling constitutes a direct breach of corporate governance.</p>\n        </div>\n\n    </div>\n\n</body>\n</html>", "equipment": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>Citiscape L.L.C. - Equipment Control, Attendance & Budget Gate System</title>\n  <style>\n    :root {\n      --primary-blue: #009cd3;\n      --dark-navy: #0f172a;\n      --accent-orange: #f97316;\n      --owned-green: #16a34a;\n      --rental-purple: #7c3aed;\n      --breakdown-red: #dc2626;\n      --idle-amber: #d97706;\n      --attendance-teal: #0f766e;\n      --budget-maroon: #7f1d1d;\n      --bg-canvas: #f1f5f9;\n      --surface-card: #ffffff;\n      --text-main: #1e293b;\n      --text-muted: #64748b;\n      --border-light: #cbd5e1;\n      --border-focus: #94a3b8;\n      --hse-bg: #fff5f5;\n      --hse-border: #ef4444;\n      --budget-bg: #fef2f2;\n    }\n\n    *, *::before, *::after {\n      box-sizing: border-box;\n    }\n\n    body {\n      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;\n      background-color: var(--bg-canvas);\n      color: var(--text-main);\n      margin: 0;\n      padding: 25px;\n      line-height: 1.4;\n      -webkit-print-color-adjust: exact;\n      print-color-adjust: exact;\n    }\n\n    .dashboard-container {\n      width: 100%;\n      max-width: 1600px;\n      margin: 0 auto;\n      display: flex;\n      flex-direction: column;\n      gap: 20px;\n    }\n\n    .manual-header {\n      background: var(--surface-card);\n      border-left: 8px solid var(--primary-blue);\n      border-radius: 6px;\n      padding: 20px;\n      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.05);\n    }\n\n    .header-main-table {\n      display: table;\n      width: 100%;\n    }\n\n    .header-cell-title {\n      display: table-cell;\n      vertical-align: middle;\n    }\n\n    .header-cell-meta {\n      display: table-cell;\n      vertical-align: middle;\n      text-align: right;\n      width: 430px;\n      font-size: 0.82rem;\n      color: var(--text-muted);\n      line-height: 1.6;\n      border-left: 2px solid var(--border-light);\n      padding-left: 25px;\n    }\n\n    .manual-header h1 {\n      margin: 0;\n      font-size: 1.9rem;\n      color: var(--dark-navy);\n      letter-spacing: -0.5px;\n      font-weight: 800;\n    }\n\n    .manual-header p.subtitle {\n      margin: 4px 0 0 0;\n      font-size: 1rem;\n      color: var(--text-muted);\n      font-weight: 600;\n    }\n\n    .summary-strip,\n    .swimlane-section,\n    .dual-grid-section {\n      background: var(--surface-card);\n      border: 1px solid var(--border-light);\n      border-radius: 8px;\n      padding: 20px;\n      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.02);\n    }\n\n    .section-title {\n      font-size: 1.2rem;\n      font-weight: 800;\n      color: var(--dark-navy);\n      margin-top: 0;\n      margin-bottom: 15px;\n      border-bottom: 2px solid var(--border-light);\n      padding-bottom: 6px;\n      text-transform: uppercase;\n      letter-spacing: 0.5px;\n    }\n\n    .quick-kpi-wrap {\n      display: flex;\n      gap: 16px;\n      flex-wrap: wrap;\n    }\n\n    .quick-kpi {\n      flex: 1 1 220px;\n      min-width: 220px;\n      border: 1px solid var(--border-light);\n      border-radius: 8px;\n      padding: 14px;\n      background: #f8fafc;\n    }\n\n    .quick-kpi .kpi-label {\n      font-size: 0.75rem;\n      color: var(--text-muted);\n      text-transform: uppercase;\n      font-weight: 700;\n      letter-spacing: 0.5px;\n      margin-bottom: 8px;\n    }\n\n    .quick-kpi .kpi-value {\n      font-size: 1.35rem;\n      font-weight: 800;\n      color: var(--dark-navy);\n      margin-bottom: 4px;\n    }\n\n    .quick-kpi .kpi-sub {\n      font-size: 0.78rem;\n      color: #475569;\n    }\n\n    .owned-box { border-left: 5px solid var(--owned-green); }\n    .rental-box { border-left: 5px solid var(--rental-purple); }\n    .attendance-box { border-left: 5px solid var(--attendance-teal); }\n    .risk-box { border-left: 5px solid var(--breakdown-red); }\n    .budget-box { border-left: 5px solid var(--budget-maroon); }\n\n    .swimlane-table {\n      width: 100%;\n      border-collapse: collapse;\n    }\n\n    .lane-row {\n      border-bottom: 1px solid var(--border-light);\n    }\n\n    .lane-row:last-child {\n      border-bottom: none;\n    }\n\n    .lane-identity {\n      width: 12%;\n      background-color: var(--dark-navy);\n      color: #ffffff;\n      font-weight: 700;\n      text-transform: uppercase;\n      font-size: 0.78rem;\n      letter-spacing: 0.8px;\n      text-align: center;\n      vertical-align: middle;\n      padding: 15px;\n      line-height: 1.5;\n    }\n\n    .lane-flow-cells {\n      width: 88%;\n      padding: 15px 15px 0 15px;\n      vertical-align: top;\n      text-align: left;\n    }\n\n    .lane-budget-bg { background-color: #fff7f7; }\n    .lane-officer-bg { background-color: #f8fafc; }\n    .lane-site-bg { background-color: #fffdf5; }\n    .lane-manager-bg { background-color: #f8fafc; }\n\n    .process-node-container {\n      display: inline-block;\n      vertical-align: top;\n      margin-right: 14px;\n      margin-bottom: 15px;\n    }\n\n    .process-card {\n      background: var(--surface-card);\n      border: 1px solid var(--border-light);\n      border-radius: 6px;\n      width: 295px;\n      padding: 14px;\n      box-shadow: 0 2px 5px rgba(0,0,0,0.03);\n      display: flex;\n      flex-direction: column;\n      justify-content: space-between;\n      min-height: 198px;\n      transition: all 0.2s ease-in-out;\n    }\n\n    .process-card:hover {\n      border-color: var(--primary-blue);\n      transform: translateY(-2px);\n      box-shadow: 0 6px 15px rgba(0, 156, 211, 0.12);\n    }\n\n    .budget-card {\n      border-color: #fecaca;\n      background: #fffafa;\n    }\n\n    .budget-card:hover {\n      border-color: var(--budget-maroon);\n      box-shadow: 0 6px 15px rgba(127, 29, 29, 0.12);\n    }\n\n    .card-content-top {\n      width: 100%;\n      margin-bottom: 12px;\n    }\n\n    .card-header-row {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      margin-bottom: 8px;\n      gap: 8px;\n      flex-wrap: wrap;\n    }\n\n    .node-tag-control {\n      background: #ffedd5;\n      color: #ea580c;\n      font-size: 0.68rem;\n      font-weight: 800;\n      padding: 2px 8px;\n      border-radius: 4px;\n      text-transform: uppercase;\n      letter-spacing: 0.3px;\n    }\n\n    .node-tag-owned { background: #dcfce7; color: var(--owned-green); }\n    .node-tag-rental { background: #f3e8ff; color: var(--rental-purple); }\n    .node-tag-gatekeeper { background: #fee2e2; color: #b91c1c; }\n    .node-tag-attendance { background: #ccfbf1; color: var(--attendance-teal); }\n    .node-tag-opt { background: #fef3c7; color: #b45309; }\n    .node-tag-budget { background: #fee2e2; color: var(--budget-maroon); }\n\n    .node-step-index {\n      font-size: 0.72rem;\n      font-weight: 800;\n      color: var(--text-muted);\n      background: #f1f5f9;\n      padding: 2px 6px;\n      border-radius: 4px;\n    }\n\n    .node-headline {\n      font-weight: 700;\n      font-size: 0.95rem;\n      color: var(--dark-navy);\n      margin-bottom: 5px;\n    }\n\n    .node-body-text {\n      font-size: 0.78rem;\n      color: #475569;\n      line-height: 1.45;\n    }\n\n    .node-output-badge {\n      font-size: 0.72rem;\n      font-weight: 700;\n      background: #f1f5f9;\n      color: #334155;\n      padding: 4px 8px;\n      border-radius: 4px;\n      border-left: 3px solid var(--primary-blue);\n      display: block;\n      width: 100%;\n      margin-top: auto;\n    }\n\n    .budget-output {\n      border-left-color: var(--budget-maroon);\n      background: #fef2f2;\n      color: #7f1d1d;\n    }\n\n    .dual-grid-row {\n      display: table;\n      width: 100%;\n      table-layout: fixed;\n      border-spacing: 20px 0;\n    }\n\n    .grid-column-half {\n      display: table-cell;\n      vertical-align: top;\n      background: var(--surface-card);\n      border: 1px solid var(--border-light);\n      border-radius: 8px;\n      padding: 20px;\n      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.02);\n    }\n\n    .form-header-title {\n      font-size: 1.1rem;\n      font-weight: 800;\n      color: var(--dark-navy);\n      margin-top: 0;\n      margin-bottom: 12px;\n      text-transform: uppercase;\n      letter-spacing: 0.3px;\n      border-bottom: 2px solid var(--primary-blue);\n      padding-bottom: 5px;\n    }\n\n    .app-data-table {\n      width: 100%;\n      border-collapse: collapse;\n      font-size: 0.74rem;\n    }\n\n    .app-data-table th {\n      background-color: #f1f5f9;\n      color: var(--dark-navy);\n      font-weight: 700;\n      border: 1px solid var(--border-light);\n      padding: 8px 6px;\n      text-transform: uppercase;\n      font-size: 0.7rem;\n      letter-spacing: 0.3px;\n    }\n\n    .app-data-table td {\n      border: 1px solid var(--border-light);\n      padding: 8px 6px;\n      color: #334155;\n      vertical-align: middle;\n    }\n\n    .row-owned-indicator {\n      border-left: 4px solid var(--owned-green) !important;\n      font-weight: 600;\n    }\n\n    .row-rental-indicator {\n      border-left: 4px solid var(--rental-purple) !important;\n      font-weight: 600;\n    }\n\n    .badge-status {\n      display: inline-block;\n      padding: 2px 6px;\n      border-radius: 4px;\n      font-weight: 800;\n      font-size: 0.65rem;\n      text-transform: uppercase;\n    }\n\n    .status-owned { background: #e8f5e9; color: var(--owned-green); }\n    .status-rental { background: #f3e8ff; color: var(--rental-purple); }\n\n    .badge-op {\n      display: inline-block;\n      padding: 2px 5px;\n      border-radius: 4px;\n      font-weight: 700;\n      font-size: 0.63rem;\n      text-transform: uppercase;\n    }\n\n    .op-active { background: #dcfce7; color: #15803d; }\n    .op-breakdown { background: #fee2e2; color: #b91c1c; }\n    .op-idle { background: #fef3c7; color: #b45309; }\n    .op-blocked { background: #fee2e2; color: #991b1b; }\n    .op-review { background: #ccfbf1; color: var(--attendance-teal); }\n\n    .approval-highlight {\n      background: #eff6ff !important;\n      border-left: 4px solid var(--primary-blue) !important;\n      font-weight: 700;\n    }\n\n    .attendance-highlight {\n      background: #f0fdfa !important;\n      border-left: 4px solid var(--attendance-teal) !important;\n    }\n\n    .budget-highlight {\n      background: #fef2f2 !important;\n      border-left: 4px solid var(--budget-maroon) !important;\n      font-weight: 700;\n      color: #7f1d1d;\n    }\n\n    .blocked-highlight {\n      background: #fef2f2 !important;\n      color: #b91c1c !important;\n      font-weight: 700;\n    }\n\n    .table-total-row {\n      background-color: #f8fafc;\n      font-weight: 700;\n    }\n\n    .table-total-row td {\n      color: var(--dark-navy);\n      border-top: 2px solid var(--border-focus);\n      font-size: 0.78rem;\n    }\n\n    .sign-off-footer-block {\n      margin-top: 20px;\n      padding-top: 15px;\n      border-top: 1px dashed var(--border-light);\n      font-size: 0.78rem;\n      display: flex;\n      justify-content: space-between;\n      gap: 20px;\n    }\n\n    .sign-signature-line {\n      width: 48%;\n    }\n\n    .hse-compliance-callout {\n      background-color: var(--hse-bg);\n      border: 1px solid #fee2e2;\n      border-left: 6px solid var(--hse-border);\n      border-radius: 6px;\n      padding: 15px;\n    }\n\n    .hse-compliance-callout h4 {\n      margin: 0 0 5px 0;\n      color: #b91c1c;\n      font-size: 0.95rem;\n      font-weight: 800;\n      text-transform: uppercase;\n      letter-spacing: 0.5px;\n    }\n\n    .hse-compliance-callout p {\n      margin: 0;\n      font-size: 0.8rem;\n      color: #991b1b;\n      line-height: 1.4;\n    }\n\n    .scrollable-table-wrapper {\n      width: 100%;\n      overflow-x: auto;\n    }\n\n    @media print {\n      @page {\n        size: A3 landscape;\n        margin: 15mm;\n      }\n\n      body {\n        background-color: #ffffff;\n        padding: 0;\n      }\n\n      .dashboard-container {\n        max-width: 100%;\n        gap: 15px;\n      }\n\n      .process-card {\n        width: 285px;\n        min-height: 200px;\n      }\n\n      .summary-strip,\n      .swimlane-section,\n      .dual-grid-section,\n      .grid-column-half,\n      .manual-header {\n        box-shadow: none !important;\n      }\n    }\n  </style>\n</head>\n<body>\n  <div class=\"dashboard-container\">\n\n    <div class=\"manual-header\">\n      <div class=\"header-main-table\">\n        <div class=\"header-cell-title\">\n          <h1>Procedure 8.2: Equipment Control, Project Control Budget Gate & Attendance Verification System</h1>\n          <p class=\"subtitle\">Operations Policies & Procedures Manual — Budget Validation, Owned / Outsourced Equipment Governance, Timesheet Monitoring, PM Approval & Logistics Final Verification</p>\n        </div>\n        <div class=\"header-cell-meta\">\n          <strong>Institution:</strong> Citiscape L.L.C.<br>\n          <strong>Document Tracking ID:</strong> CS-OPS-EQP-8.2-BGT-ATTN<br>\n          <strong>System Status:</strong> Version R5 (Full Governance Model)<br>\n          <strong>Issue Date:</strong> 04.06.2026<br>\n          <strong>Core Scope:</strong> Project Control Budget Gate + Equipment Demand + Timesheet / PM / LO Approval Flow\n        </div>\n      </div>\n    </div>\n\n    <div class=\"summary-strip\">\n      <h2 class=\"section-title\">Control Priorities</h2>\n      <div class=\"quick-kpi-wrap\">\n\n        <div class=\"quick-kpi budget-box\">\n          <div class=\"kpi-label\">Project Control Gate</div>\n          <div class=\"kpi-value\">Budget Approved Only</div>\n          <div class=\"kpi-sub\">\n            No equipment request, owned or outsourced, proceeds unless Project Control confirms budget, BOQ alignment, or required variation.\n          </div>\n        </div>\n\n        <div class=\"quick-kpi owned-box\">\n          <div class=\"kpi-label\">Owned Equipment Priority</div>\n          <div class=\"kpi-value\">Internal Fleet First</div>\n          <div class=\"kpi-sub\">\n            Company-owned fleet is checked first before triggering any outsourced / rented equipment route.\n          </div>\n        </div>\n\n        <div class=\"quick-kpi rental-box\">\n          <div class=\"kpi-label\">Unavailable = Outsourced Path</div>\n          <div class=\"kpi-value\">Legal + HSE Gate</div>\n          <div class=\"kpi-sub\">\n            Outsourced equipment requires verified legal documents, inspection, and HSE release before operation and timekeeping.\n          </div>\n        </div>\n\n        <div class=\"quick-kpi attendance-box\">\n          <div class=\"kpi-label\">Attendance / Timesheet Chain</div>\n          <div class=\"kpi-value\">Timekeeper → RAS → PM → LO</div>\n          <div class=\"kpi-sub\">\n            Utilization is maintained by Timekeeper, reviewed at project, approved by PM, then finally verified by Logistics Officer.\n          </div>\n        </div>\n\n        <div class=\"quick-kpi risk-box\">\n          <div class=\"kpi-label\">Blocked Conditions</div>\n          <div class=\"kpi-value\">Idle / Breakdown / Over-Budget / Unauthorized</div>\n          <div class=\"kpi-sub\">\n            Block operation and billing immediately if equipment is idle, failed, unauthorized, or not budget-approved.\n          </div>\n        </div>\n\n      </div>\n    </div>\n\n    <div class=\"swimlane-section\">\n      <h2 class=\"section-title\">Standard Operating Control Flow</h2>\n      <table class=\"swimlane-table\">\n\n        <!-- PROJECT CONTROL -->\n        <tr class=\"lane-row\">\n          <td class=\"lane-identity lane-budget-bg\" style=\"background: var(--budget-maroon);\">\n            Project<br>Control\n          </td>\n          <td class=\"lane-flow-cells\">\n\n            <div class=\"process-node-container\">\n              <div class=\"process-card budget-card\">\n                <div class=\"card-content-top\">\n                  <div class=\"card-header-row\">\n                    <span class=\"node-tag-control node-tag-budget\">Budget Gate</span>\n                    <span class=\"node-step-index\">0.1</span>\n                  </div>\n                  <div class=\"node-headline\">Equipment Demand Budget Validation</div>\n                  <div class=\"node-body-text\">\n                    Validate whether requested equipment is included in approved BOQ, allocated budget, and project cost plan before any logistics action begins.\n                  </div>\n                </div>\n                <span class=\"node-output-badge budget-output\">📊 Budget Validation Decision</span>\n              </div>\n            </div>\n\n            <div class=\"process-node-container\">\n              <div class=\"process-card budget-card\">\n                <div class=\"card-content-top\">\n                  <div class=\"card-header-row\">\n                    <span class=\"node-tag-control node-tag-budget\">Control</span>\n                    <span class=\"node-step-index\">0.2</span>\n                  </div>\n                  <div class=\"node-headline\">Approve / Reject / Escalate</div>\n                  <div class=\"node-body-text\">\n                    Approve if within budget. Reject if unjustified. Escalate if variation, additional budget, or revised approval is required.\n                  </div>\n                </div>\n                <span class=\"node-output-badge budget-output\">✅ Approved / ❌ Rejected / ⚠ Variation Required</span>\n              </div>\n            </div>\n\n          </td>\n        </tr>\n\n        <!-- LOGISTICS -->\n        <tr class=\"lane-row\">\n          <td class=\"lane-identity lane-officer-bg\" style=\"color: var(--dark-navy);\">\n            Logistics<br>Officer\n          </td>\n          <td class=\"lane-flow-cells\">\n\n            <div class=\"process-node-container\">\n              <div class=\"process-card\">\n                <div class=\"card-content-top\">\n                  <div class=\"card-header-row\">\n                    <span class=\"node-tag-control\">Demand Gate</span>\n                    <span class=\"node-step-index\">1.1</span>\n                  </div>\n                  <div class=\"node-headline\">Receive Budget-Approved Equipment Request</div>\n                  <div class=\"node-body-text\">\n                    Process only equipment demands already validated by Project Control for budget, BOQ, or approved variation status.\n                  </div>\n                </div>\n                <span class=\"node-output-badge\">📋 Approved Equipment Requisition Form (ERF)</span>\n              </div>\n            </div>\n\n            <div class=\"process-node-container\">\n              <div class=\"process-card\">\n                <div class=\"card-content-top\">\n                  <div class=\"card-header-row\">\n                    <span class=\"node-tag-control node-tag-owned\">Owned Fleet Check</span>\n                    <span class=\"node-step-index\">1.2</span>\n                  </div>\n                  <div class=\"node-headline\">Internal Availability Validation</div>\n                  <div class=\"node-body-text\">\n                    Check if the requested machine is available within company fleet. If yes, move to inspection and transfer control.\n                  </div>\n                </div>\n                <span class=\"node-output-badge\">✅ Owned Equipment Allocation Route</span>\n              </div>\n            </div>\n\n            <div class=\"process-node-container\">\n              <div class=\"process-card\">\n                <div class=\"card-content-top\">\n                  <div class=\"card-header-row\">\n                    <span class=\"node-tag-control node-tag-rental\">Outsourced Route</span>\n                    <span class=\"node-step-index\">1.3</span>\n                  </div>\n                  <div class=\"node-headline\">Unavailable → Outsourced / Rental Equipment</div>\n                  <div class=\"node-body-text\">\n                    If internal fleet is unavailable, move to outsourced equipment route using approved PO / agreement and budget-cleared demand reference.\n                  </div>\n                </div>\n                <span class=\"node-output-badge\">📦 Outsourced Equipment Mobilization Request</span>\n              </div>\n            </div>\n\n            <div class=\"process-node-container\">\n              <div class=\"process-card\">\n                <div class=\"card-content-top\">\n                  <div class=\"card-header-row\">\n                    <span class=\"node-tag-control node-tag-rental\">Legal Gate</span>\n                    <span class=\"node-step-index\">1.4</span>\n                  </div>\n                  <div class=\"node-headline\">Legal Document Verification</div>\n                  <div class=\"node-body-text\">\n                    Verify registration, insurance, operator license, residence visa, passport validity, third-party inspection, and other compliance records.\n                  </div>\n                </div>\n                <span class=\"node-output-badge\">📁 Verified Legal Record Package</span>\n              </div>\n            </div>\n\n            <div class=\"process-node-container\">\n              <div class=\"process-card\">\n                <div class=\"card-content-top\">\n                  <div class=\"card-header-row\">\n                    <span class=\"node-tag-control\">Inspection</span>\n                    <span class=\"node-step-index\">1.5</span>\n                  </div>\n                  <div class=\"node-headline\">Receiving, Inspection & HSE Release</div>\n                  <div class=\"node-body-text\">\n                    Complete receiving inspection, equipment checklist, and HSE clearance before timekeeping starts for owned or outsourced equipment.\n                  </div>\n                </div>\n                <span class=\"node-output-badge\">✅ Checklist + HSE Approval to Start</span>\n              </div>\n            </div>\n\n          </td>\n        </tr>\n\n        <!-- SITE / PM -->\n        <tr class=\"lane-row\">\n          <td class=\"lane-identity lane-site-bg\" style=\"color: #9a3412;\">\n            Timekeeper /<br>Project RAS /<br>PM / Operator\n          </td>\n          <td class=\"lane-flow-cells\">\n\n            <div class=\"process-node-container\">\n              <div class=\"process-card\">\n                <div class=\"card-content-top\">\n                  <div class=\"card-header-row\">\n                    <span class=\"node-tag-control\">Custody Link</span>\n                    <span class=\"node-step-index\">2.1</span>\n                  </div>\n                  <div class=\"node-headline\">Deployment & Site Assignment</div>\n                  <div class=\"node-body-text\">\n                    Equipment is deployed to the project, operator receives assignment, and actual machine identity is linked to the specific project use.\n                  </div>\n                </div>\n                <span class=\"node-output-badge\">✍️ Assignment / Site Handover Record</span>\n              </div>\n            </div>\n\n            <div class=\"process-node-container\">\n              <div class=\"process-card\">\n                <div class=\"card-content-top\">\n                  <div class=\"card-header-row\">\n                    <span class=\"node-tag-control node-tag-gatekeeper\">Gatekeeper</span>\n                    <span class=\"node-step-index\">2.2</span>\n                  </div>\n                  <div class=\"node-headline\">Operational Status Validation</div>\n                  <div class=\"node-body-text\">\n                    Allow operation only if equipment is active, assigned, inspection-cleared, budget-approved, and legally valid. Block idle, breakdown, unauthorized, or expired units.\n                  </div>\n                </div>\n                <span class=\"node-output-badge\">🔒 Operational Interlock Check</span>\n              </div>\n            </div>\n\n            <div class=\"process-node-container\">\n              <div class=\"process-card\">\n                <div class=\"card-content-top\">\n                  <div class=\"card-header-row\">\n                    <span class=\"node-tag-control node-tag-attendance\">Attendance</span>\n                    <span class=\"node-step-index\">2.3</span>\n                  </div>\n                  <div class=\"node-headline\">Timekeeper Maintains Equipment Timesheet</div>\n                  <div class=\"node-body-text\">\n                    Timekeeper records actual machine used, daily working hours, idle hours, and exact outsourced equipment utilization against site activity.\n                  </div>\n                </div>\n                <span class=\"node-output-badge\">🕒 Outsourced / Equipment Timesheet</span>\n              </div>\n            </div>\n\n            <div class=\"process-node-container\">\n              <div class=\"process-card\">\n                <div class=\"card-content-top\">\n                  <div class=\"card-header-row\">\n                    <span class=\"node-tag-control node-tag-attendance\">Review</span>\n                    <span class=\"node-step-index\">2.4</span>\n                  </div>\n                  <div class=\"node-headline\">Project RAS Review & Submission</div>\n                  <div class=\"node-body-text\">\n                    Project RAS checks the timesheet for discrepancies and submits the reviewed timesheet to the Project Manager for acknowledgment / approval.\n                  </div>\n                </div>\n                <span class=\"node-output-badge\">📤 Reviewed Timesheet to PM</span>\n              </div>\n            </div>\n\n            <div class=\"process-node-container\">\n              <div class=\"process-card\">\n                <div class=\"card-content-top\">\n                  <div class=\"card-header-row\">\n                    <span class=\"node-tag-control node-tag-attendance\">PM Approval</span>\n                    <span class=\"node-step-index\">2.5</span>\n                  </div>\n                  <div class=\"node-headline\">Project Manager Approval / Acknowledgment</div>\n                  <div class=\"node-body-text\">\n                    PM approves or comments on equipment utilization. If discrepancies exist, the timesheet is returned for correction before logistics verification.\n                  </div>\n                </div>\n                <span class=\"node-output-badge\">✅ PM Approved / Commented Timesheet</span>\n              </div>\n            </div>\n\n          </td>\n        </tr>\n\n        <!-- LOGISTICS MANAGER / FINAL -->\n        <tr class=\"lane-row\">\n          <td class=\"lane-identity lane-manager-bg\" style=\"color: var(--text-main);\">\n            Logistics<br>Officer /<br>Logistics Manager\n          </td>\n          <td class=\"lane-flow-cells\">\n\n            <div class=\"process-node-container\">\n              <div class=\"process-card\">\n                <div class=\"card-content-top\">\n                  <div class=\"card-header-row\">\n                    <span class=\"node-tag-control node-tag-attendance\">Verification</span>\n                    <span class=\"node-step-index\">3.1</span>\n                  </div>\n                  <div class=\"node-headline\">Final Logistics Verification</div>\n                  <div class=\"node-body-text\">\n                    Logistics Officer verifies PM-approved timesheet, machine identity, hours, and correctness before supplier invoice can be supported.\n                  </div>\n                </div>\n                <span class=\"node-output-badge\">🖊️ Final Verified Equipment Timesheet</span>\n              </div>\n            </div>\n\n            <div class=\"process-node-container\">\n              <div class=\"process-card\">\n                <div class=\"card-content-top\">\n                  <div class=\"card-header-row\">\n                    <span class=\"node-tag-control\">Reconciliation</span>\n                    <span class=\"node-step-index\">3.2</span>\n                  </div>\n                  <div class=\"node-headline\">Daily / Monthly Utilization Matrix</div>\n                  <div class=\"node-body-text\">\n                    Consolidate owned and outsourced equipment into one matrix showing utilization, idle status, breakdowns, and active project deployment.\n                  </div>\n                </div>\n                <span class=\"node-output-badge\">📅 Equipment Utilization Matrix Report</span>\n              </div>\n            </div>\n\n            <div class=\"process-node-container\">\n              <div class=\"process-card\">\n                <div class=\"card-content-top\">\n                  <div class=\"card-header-row\">\n                    <span class=\"node-tag-control\">Analysis</span>\n                    <span class=\"node-step-index\">3.3</span>\n                  </div>\n                  <div class=\"node-headline\">Budget / Attendance / Cost Benchmark</div>\n                  <div class=\"node-body-text\">\n                    Compare approved budget demand, actual utilization, idle exposure, rental cost, and downtime to identify control issues and leakage.\n                  </div>\n                </div>\n                <span class=\"node-output-badge\">📈 Budget & Utilization Performance Report</span>\n              </div>\n            </div>\n\n            <div class=\"process-node-container\">\n              <div class=\"process-card\">\n                <div class=\"card-content-top\">\n                  <div class=\"card-header-row\">\n                    <span class=\"node-tag-control node-tag-opt\">Optimization</span>\n                    <span class=\"node-step-index\">3.4</span>\n                  </div>\n                  <div class=\"node-headline\">Transfer / Off-Hire Decision</div>\n                  <div class=\"node-body-text\">\n                    For idle, unnecessary, or underutilized units, decide transfer to another project or immediate off-hire to protect project cost and budget.\n                  </div>\n                </div>\n                <span class=\"node-output-badge\">🔁 Transfer / Off-Hire Action Log</span>\n              </div>\n            </div>\n\n            <div class=\"process-node-container\">\n              <div class=\"process-card\">\n                <div class=\"card-content-top\">\n                  <div class=\"card-header-row\">\n                    <span class=\"node-tag-control\">Audit Block</span>\n                    <span class=\"node-step-index\">3.5</span>\n                  </div>\n                  <div class=\"node-headline\">Closed Loop Governance Audit</div>\n                  <div class=\"node-body-text\">\n                    Reconcile project control budget approval, equipment demand, actual deployment, timesheet chain, PM approval, final logistics verification, and billing basis.\n                  </div>\n                </div>\n                <span class=\"node-output-badge\">🏁 Final Closed-Loop Equipment Audit</span>\n              </div>\n            </div>\n\n          </td>\n        </tr>\n\n      </table>\n    </div>\n\n    <div class=\"dual-grid-section\">\n      <div class=\"dual-grid-row\">\n\n        <!-- LEFT FORM -->\n        <div class=\"grid-column-half\">\n          <div class=\"form-header-title\">Equipment Demand, Budget Gate & Attendance Control Form</div>\n\n          <table style=\"width:100%; border:none; margin:0 0 10px 0; font-size:0.75rem;\">\n            <tr style=\"background:none;\">\n              <td style=\"border:none; padding:0;\"><strong>Project:</strong> Yas Island Extension Project</td>\n              <td style=\"border:none; padding:0; text-align:right;\"><strong>Date:</strong> ____________________</td>\n            </tr>\n          </table>\n\n          <table class=\"app-data-table\">\n            <thead>\n              <tr>\n                <th style=\"width: 14%;\">Asset ID</th>\n                <th style=\"width: 14%;\">Ownership</th>\n                <th style=\"width: 14%;\">Budget Gate</th>\n                <th style=\"width: 14%;\">Status</th>\n                <th style=\"width: 12%;\">Worked Hrs</th>\n                <th style=\"width: 14%;\">Timesheet</th>\n                <th style=\"width: 18%;\">PM / LO Status</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr>\n                <td class=\"row-owned-indicator\">EXC-210</td>\n                <td><span class=\"badge-status status-owned\">Owned</span></td>\n                <td class=\"budget-highlight\">Approved</td>\n                <td><span class=\"badge-op op-active\">Active</span></td>\n                <td style=\"font-weight:700; text-align:right;\">8.0</td>\n                <td class=\"attendance-highlight\">Recorded</td>\n                <td class=\"approval-highlight\">PM Approved / LO Verified</td>\n              </tr>\n\n              <tr>\n                <td class=\"row-rental-indicator\">TRK-405</td>\n                <td><span class=\"badge-status status-rental\">Outsourced</span></td>\n                <td class=\"budget-highlight\">Approved</td>\n                <td><span class=\"badge-op op-active\">Active</span></td>\n                <td style=\"font-weight:700; text-align:right;\">10.0</td>\n                <td class=\"attendance-highlight\">Recorded</td>\n                <td class=\"approval-highlight\">PM Approved / LO Verified</td>\n              </tr>\n\n              <tr>\n                <td class=\"row-rental-indicator\">GEN-102</td>\n                <td><span class=\"badge-status status-rental\">Outsourced</span></td>\n                <td class=\"budget-highlight\">Approved</td>\n                <td><span class=\"badge-op op-idle\">Idle</span></td>\n                <td style=\"text-align:right;\">0.0</td>\n                <td class=\"attendance-highlight\">No Operation</td>\n                <td class=\"blocked-highlight\">Blocked / Review / Off-Hire</td>\n              </tr>\n\n              <tr>\n                <td class=\"row-owned-indicator\">JCB-044</td>\n                <td><span class=\"badge-status status-owned\">Owned</span></td>\n                <td class=\"budget-highlight\">Approved</td>\n                <td><span class=\"badge-op op-breakdown\">Breakdown</span></td>\n                <td style=\"text-align:right;\">0.0</td>\n                <td class=\"attendance-highlight\">Stopped</td>\n                <td class=\"blocked-highlight\">Blocked</td>\n              </tr>\n\n              <tr>\n                <td class=\"row-rental-indicator\">CRN-550</td>\n                <td><span class=\"badge-status status-rental\">Outsourced</span></td>\n                <td class=\"budget-highlight\">Variation Required</td>\n                <td><span class=\"badge-op op-blocked\">Hold</span></td>\n                <td style=\"text-align:right;\">0.0</td>\n                <td class=\"attendance-highlight\">Not Started</td>\n                <td class=\"blocked-highlight\">Awaiting Project Control</td>\n              </tr>\n            </tbody>\n          </table>\n\n          <div class=\"sign-off-footer-block\">\n            <div class=\"sign-signature-line\"><strong>Project Control Validation:</strong> __________________________________</div>\n            <div class=\"sign-signature-line\"><strong>Timekeeper Signature:</strong> __________________________________</div>\n          </div>\n\n          <div class=\"sign-off-footer-block\" style=\"margin-top:10px;\">\n            <div class=\"sign-signature-line\"><strong>Project RAS Review:</strong> __________________________________</div>\n            <div class=\"sign-signature-line\"><strong>Project Manager Approval:</strong> __________________________________</div>\n          </div>\n\n          <div class=\"sign-off-footer-block\" style=\"margin-top:10px;\">\n            <div class=\"sign-signature-line\"><strong>Logistics Officer Verification:</strong> __________________________________</div>\n            <div class=\"sign-signature-line\"><strong>Logistics Manager Audit:</strong> __________________________________</div>\n          </div>\n        </div>\n\n        <!-- RIGHT MATRIX -->\n        <div class=\"grid-column-half\">\n          <div class=\"form-header-title\">Owned + Outsourced Equipment Utilization & Budget Matrix</div>\n\n          <table style=\"width:100%; border:none; margin:0 0 10px 0; font-size:0.75rem;\">\n            <tr style=\"background:none;\">\n              <td style=\"border:none; padding:0;\"><strong>Project Context:</strong> Yas Island Extension Project</td>\n              <td style=\"border:none; padding:0; text-align:right;\"><strong>Reporting Month:</strong> June 2026</td>\n            </tr>\n          </table>\n\n          <div class=\"scrollable-table-wrapper\">\n            <table class=\"app-data-table\">\n              <thead>\n                <tr>\n                  <th>Equipment Unit</th>\n                  <th>Class</th>\n                  <th>Budget Status</th>\n                  <th>Tag / Plate</th>\n                  <th>UOM</th>\n                  <th>D1</th>\n                  <th>D2</th>\n                  <th>D3</th>\n                  <th>D4</th>\n                  <th>D5..31</th>\n                  <th style=\"background:#fff9db; width: 12%;\">Total Hrs</th>\n                </tr>\n              </thead>\n              <tbody>\n                <tr>\n                  <td class=\"row-owned-indicator\">Excavator CAT-320</td>\n                  <td>Owned</td>\n                  <td class=\"budget-highlight\">Approved</td>\n                  <td style=\"font-family: monospace; font-weight:600;\">EXC-210</td>\n                  <td>Hours</td>\n                  <td>8</td>\n                  <td>0</td>\n                  <td>9</td>\n                  <td>8</td>\n                  <td style=\"color:var(--text-muted);\">...</td>\n                  <td style=\"font-weight:800; background:#fef9c3; text-align:right;\">25.0</td>\n                </tr>\n\n                <tr>\n                  <td class=\"row-rental-indicator\">Man Tipper Truck</td>\n                  <td>Outsourced</td>\n                  <td class=\"budget-highlight\">Approved</td>\n                  <td style=\"font-family: monospace; font-weight:600;\">TRK-405</td>\n                  <td>Hours</td>\n                  <td>10</td>\n                  <td>10</td>\n                  <td>9</td>\n                  <td>10</td>\n                  <td style=\"color:var(--text-muted);\">...</td>\n                  <td style=\"font-weight:800; background:#fef9c3; text-align:right;\">39.0</td>\n                </tr>\n\n                <tr>\n                  <td class=\"row-rental-indicator\">Perkins Generator 50k</td>\n                  <td>Outsourced</td>\n                  <td class=\"budget-highlight\">Approved</td>\n                  <td style=\"font-family: monospace; font-weight:600;\">GEN-102</td>\n                  <td>Hours</td>\n                  <td>0</td>\n                  <td>0</td>\n                  <td>0</td>\n                  <td>0</td>\n                  <td style=\"color:var(--text-muted);\">...</td>\n                  <td style=\"font-weight:800; background:#fef3c7; color:#92400e; text-align:right;\">0.0</td>\n                </tr>\n\n                <tr>\n                  <td class=\"row-owned-indicator\">JCB Backhoe Loader</td>\n                  <td>Owned</td>\n                  <td class=\"budget-highlight\">Approved</td>\n                  <td style=\"font-family: monospace; font-weight:600;\">JCB-044</td>\n                  <td>Hours</td>\n                  <td>0</td>\n                  <td>0</td>\n                  <td>0</td>\n                  <td>0</td>\n                  <td style=\"color:var(--text-muted);\">...</td>\n                  <td style=\"font-weight:800; background:#fee2e2; color:#b91c1c; text-align:right;\">0.0</td>\n                </tr>\n\n                <tr>\n                  <td class=\"row-rental-indicator\">Mobile Crane 55T</td>\n                  <td>Outsourced</td>\n                  <td class=\"budget-highlight\">Variation Required</td>\n                  <td style=\"font-family: monospace; font-weight:600;\">CRN-550</td>\n                  <td>Hours</td>\n                  <td>0</td>\n                  <td>0</td>\n                  <td>0</td>\n                  <td>0</td>\n                  <td style=\"color:var(--text-muted);\">...</td>\n                  <td style=\"font-weight:800; background:#fee2e2; color:#7f1d1d; text-align:right;\">0.0</td>\n                </tr>\n\n                <tr class=\"table-total-row\">\n                  <td colspan=\"5\">AGGREGATED APPROVED UTILIZATION TOTALS</td>\n                  <td>18</td>\n                  <td>10</td>\n                  <td>18</td>\n                  <td>18</td>\n                  <td style=\"color:var(--text-muted);\">...</td>\n                  <td style=\"background:#fde047; color:var(--dark-navy); font-weight:800; text-align:right;\">64.0</td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n\n          <div class=\"sign-off-footer-block\">\n            <div class=\"sign-signature-line\"><strong>Compiled By (Project / Timekeeper):</strong> ________________________</div>\n            <div class=\"sign-signature-line\"><strong>Reviewed By (PM):</strong> ________________________</div>\n          </div>\n\n          <div class=\"sign-off-footer-block\" style=\"margin-top:10px;\">\n            <div class=\"sign-signature-line\"><strong>Verified By (Logistics Officer):</strong> ________________________</div>\n            <div class=\"sign-signature-line\"><strong>Audited By (Logistics Manager):</strong> ________________________</div>\n          </div>\n        </div>\n\n      </div>\n    </div>\n\n    <div class=\"hse-compliance-callout\">\n      <h4>Mandatory Governance, Legal & Approval Directives</h4>\n      <p>\n        No equipment demand shall proceed without Project Control confirmation that the requirement is budgeted, within BOQ, or supported by approved variation. If internal equipment is unavailable, outsourced equipment may only be mobilized after legal document validation, inspection, and HSE clearance. No invoice basis is valid without maintained timesheet, project review, PM approval/acknowledgment, and final Logistics verification.\n      </p>\n    </div>\n\n  </div>\n</body>\n</html>", "manpower": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Citiscape L.L.C. - Outsourced Manpower Control, Attendance & Camp Governance</title>\n<style>\n:root {\n  --primary-blue:#009cd3;\n  --dark-navy:#0f172a;\n  --accent-orange:#f97316;\n  --attendance-teal:#0f766e;\n  --manpower-indigo:#4f46e5;\n  --risk-red:#dc2626;\n  --bg:#f1f5f9;\n  --surface:#ffffff;\n  --text:#1e293b;\n  --muted:#64748b;\n  --border:#cbd5e1;\n}\n*{box-sizing:border-box}\nbody{margin:0;padding:24px;background:var(--bg);font-family:'Segoe UI',Arial,sans-serif;color:var(--text);line-height:1.45}\n.container{max-width:1580px;margin:0 auto;display:flex;flex-direction:column;gap:20px}\n.header{background:var(--surface);border-left:8px solid var(--primary-blue);border-radius:6px;padding:20px;box-shadow:0 4px 15px rgba(15,23,42,.05)}\n.head-grid{display:table;width:100%}\n.title-cell,.meta-cell{display:table-cell;vertical-align:middle}\n.meta-cell{text-align:right;width:390px;border-left:2px solid var(--border);padding-left:24px;color:var(--muted);font-size:.82rem;line-height:1.6}\nh1{margin:0;font-size:1.9rem;font-weight:800;color:var(--dark-navy)}\n.subtitle{margin:4px 0 0;font-size:1rem;color:var(--muted);font-weight:600}\n.panel{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px;box-shadow:0 4px 15px rgba(15,23,42,.02)}\n.section-title{font-size:1.2rem;font-weight:800;color:var(--dark-navy);margin:0 0 15px;border-bottom:2px solid var(--border);padding-bottom:6px;text-transform:uppercase;letter-spacing:.5px}\n.banner-grid{display:grid;grid-template-columns:repeat(3,minmax(220px,1fr));gap:16px}\n.banner-card{border:1px solid var(--border);border-radius:8px;padding:14px;background:#f8fafc}\n.banner-card strong{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);margin-bottom:8px}\n.banner-card .value{font-size:1.18rem;font-weight:800;color:var(--dark-navy);margin-bottom:5px}\n.banner-card.baseline{border-left:5px solid var(--manpower-indigo)}\n.banner-card.attn{border-left:5px solid var(--attendance-teal)}\n.banner-card.enh{border-left:5px solid var(--accent-orange)}\n.table{width:100%;border-collapse:collapse}\n.table th,.table td{border:1px solid var(--border);padding:9px 8px;vertical-align:top;font-size:.78rem}\n.table th{background:#f1f5f9;text-transform:uppercase;letter-spacing:.3px;color:var(--dark-navy);font-size:.72rem}\n.lane{width:12%;background:var(--dark-navy);color:#fff;font-weight:700;text-transform:uppercase;text-align:center;vertical-align:middle;letter-spacing:.8px}\n.flowcell{padding:15px}\n.card{display:inline-block;vertical-align:top;width:285px;min-height:188px;margin:0 14px 15px 0;border:1px solid var(--border);border-radius:6px;padding:14px;background:var(--surface);box-shadow:0 2px 5px rgba(0,0,0,.03)}\n.tag{display:inline-block;background:#dbeafe;color:#1d4ed8;font-size:.68rem;font-weight:800;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.3px}\n.tag.attn{background:#ccfbf1;color:var(--attendance-teal)}\n.tag.legal{background:#e0e7ff;color:var(--manpower-indigo)}\n.tag.enh{background:#ffedd5;color:#ea580c}\n.step{float:right;background:#f1f5f9;color:var(--muted);font-size:.72rem;font-weight:800;padding:2px 6px;border-radius:4px}\n.headline{font-weight:700;font-size:.95rem;color:var(--dark-navy);margin:10px 0 6px}\n.body{font-size:.78rem;color:#475569;line-height:1.42}\n.out{display:block;margin-top:12px;background:#f1f5f9;border-left:3px solid var(--primary-blue);border-radius:4px;padding:4px 8px;font-size:.72rem;font-weight:700;color:#334155}\n.note{background:#fff7ed;border:1px solid #fed7aa;border-left:6px solid var(--accent-orange);border-radius:8px;padding:15px}\n.note h4{margin:0 0 6px;color:#9a3412;font-size:.95rem;text-transform:uppercase;letter-spacing:.4px}\n.note p{margin:0;color:#7c2d12;font-size:.82rem}\n@media print{\n @page{size:A3 landscape;margin:15mm}\n body{background:#fff;padding:0}\n .panel,.header{box-shadow:none!important}\n}\n</style>\n</head>\n<body>\n<div class=\"container\">\n  <div class=\"header\">\n    <div class=\"head-grid\">\n      <div class=\"title-cell\">\n        <h1>Procedure 10.2: Outsourced Manpower Control, Attendance & Camp Governance</h1>\n        <p class=\"subtitle\">Operations Policies & Procedures Manual — Outsourced Manpower Legality, Attendance Validation, PM Approval & Final Logistics Verification</p>\n      </div>\n      <div class=\"meta-cell\">\n        <strong>Institution:</strong> Citiscape L.L.C.<br>\n        <strong>Document Tracking ID:</strong> CS-OPS-MPW-10.2-ATTN<br>\n        <strong>System Status:</strong> Version R3 (Enhanced Consolidation)<br>\n        <strong>Issue Date:</strong> 04.06.2026<br>\n        <strong>Core Scope:</strong> Manpower legality, camp control, attendance chain & supplier billing governance\n      </div>\n    </div>\n  </div>\n\n  <div class=\"panel\">\n    <h2 class=\"section-title\">Baseline Controls Already in Place + Enhancement Direction</h2>\n    <div class=\"banner-grid\">\n      <div class=\"banner-card baseline\">\n        <strong>Current Control in Place</strong>\n        <div class=\"value\">Legal & Camp Admission Control</div>\n        <div>Passport, visa, EID, health card, and license (for drivers) are verified before acceptance and accommodation allocation.</div>\n      </div>\n      <div class=\"banner-card attn\">\n        <strong>Current Control in Place</strong>\n        <div class=\"value\">Attendance / Timesheet Approval Chain</div>\n        <div>Timekeeper records the timesheet, Project RAS reviews it, PM acknowledges / approves, then Logistics verifies before supplier billing.</div>\n      </div>\n      <div class=\"banner-card enh\">\n        <strong>Enhancement Proposal</strong>\n        <div class=\"value\">Dashboard, Alert & Exception Layer</div>\n        <div>Keep existing approvals exactly as policy baseline, but add visibility for over‑deployment, idle manpower, expiry alerts, and pending approvals.</div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"panel\">\n    <h2 class=\"section-title\">Standard Operating Control Flow</h2>\n    <table class=\"table\">\n      <tr>\n        <td class=\"lane\">Logistics<br>Officer /<br>Camp In‑Charge</td>\n        <td class=\"flowcell\">\n          <div class=\"card\"><span class=\"tag legal\">Legality Gate</span><span class=\"step\">1.1</span><div class=\"headline\">Supplier Manpower Verification</div><div class=\"body\">Confirm outsourced manpower list against valid agreement, required positions, qualifications, and legal documentation before deployment to camp or project.</div><span class=\"out\">📋 Approved Outsourced Manpower List</span></div>\n          <div class=\"card\"><span class=\"tag legal\">Camp Control</span><span class=\"step\">1.2</span><div class=\"headline\">Document Check‑In & Accommodation Allocation</div><div class=\"body\">Receive workers, verify passport, visa, EID, health card, and license where applicable, then allocate bed, utilities, and camp instructions with signed acknowledgment.</div><span class=\"out\">🏕️ Manpower Check In / Out Monitoring</span></div>\n          <div class=\"card\"><span class=\"tag enh\">Enhancement</span><span class=\"step\">1.3</span><div class=\"headline\">Expiry & Capacity Alert Layer</div><div class=\"body\">Retain the existing legality and camp control, but add visual expiry alerts for visas / health cards and occupancy capacity monitoring for proactive control.</div><span class=\"out\">🔔 Expiry / Capacity Exception Dashboard</span></div>\n        </td>\n      </tr>\n      <tr>\n        <td class=\"lane\">Timekeeper /<br>Project RAS /<br>PM</td>\n        <td class=\"flowcell\">\n          <div class=\"card\"><span class=\"tag attn\">Attendance</span><span class=\"step\">2.1</span><div class=\"headline\">Timekeeper Maintains Timesheet</div><div class=\"body\">Record actual manpower utilization daily and prepare the monthly timesheet based on the exact workers present and deployed to the project.</div><span class=\"out\">🕒 Manpower Timesheet</span></div>\n          <div class=\"card\"><span class=\"tag attn\">Review</span><span class=\"step\">2.2</span><div class=\"headline\">Project RAS Review</div><div class=\"body\">Review the timesheet for discrepancies and return it for correction if utilization or worker count is not aligned before forwarding to PM.</div><span class=\"out\">📤 Reviewed Timesheet to PM</span></div>\n          <div class=\"card\"><span class=\"tag attn\">PM Approval</span><span class=\"step\">2.3</span><div class=\"headline\">Project Manager Approval / Acknowledgment</div><div class=\"body\">PM acknowledges or comments on the timesheet. Only acknowledged / approved timesheets move to Logistics for supplier invoicing support.</div><span class=\"out\">✅ PM Approved / Commented Timesheet</span></div>\n          <div class=\"card\"><span class=\"tag enh\">Enhancement</span><span class=\"step\">2.4</span><div class=\"headline\">Absence & Over‑Deployment Exception Check</div><div class=\"body\">Preserve current timesheet flow, but overlay alerts for absences, workers deployed above requirement, or mismatch between approved demand and actual attendance.</div><span class=\"out\">📊 Attendance Exception Alert</span></div>\n        </td>\n      </tr>\n      <tr>\n        <td class=\"lane\">Logistics<br>Officer /<br>Logistics Manager</td>\n        <td class=\"flowcell\">\n          <div class=\"card\"><span class=\"tag attn\">Verification</span><span class=\"step\">3.1</span><div class=\"headline\">Final Logistics Verification</div><div class=\"body\">Verify the PM‑approved manpower timesheet and sign it before forwarding to the supplier for invoicing, in line with policy control.</div><span class=\"out\">🖊️ Final Verified Timesheet</span></div>\n          <div class=\"card\"><span class=\"tag legal\">Off‑Hire / Transfer</span><span class=\"step\">3.2</span><div class=\"headline\">Off‑Hire or Transfer Decision</div><div class=\"body\">If manpower is no longer required, coordinate transfer or off‑hire with PM / LM approval and supplier notification within the policy notice period.</div><span class=\"out\">🔁 Transfer / Off‑Hire Action Log</span></div>\n          <div class=\"card\"><span class=\"tag enh\">Enhancement</span><span class=\"step\">3.3</span><div class=\"headline\">Closed Loop Approval Dashboard</div><div class=\"body\">Do not replace the current control chain; simply consolidate pending PM approvals, Logistics verifications, camp legality status, and supplier billing readiness in one view.</div><span class=\"out\">📈 Consolidated Manpower Control Dashboard</span></div>\n        </td>\n      </tr>\n    </table>\n  </div>\n\n  <div class=\"panel\">\n    <h2 class=\"section-title\">Attendance & Approval Matrix</h2>\n    <table class=\"table\">\n      <thead>\n        <tr>\n          <th>Worker Group / Position</th>\n          <th>Legality Status</th>\n          <th>Camp Status</th>\n          <th>Attendance / Timesheet</th>\n          <th>PM Status</th>\n          <th>Logistics Status</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td>General Labor – 32 Nos.</td>\n          <td>Verified</td>\n          <td>Checked In</td>\n          <td>Recorded</td>\n          <td>Approved</td>\n          <td>Verified for Billing</td>\n        </tr>\n        <tr>\n          <td>Drivers – 8 Nos.</td>\n          <td>Verified incl. License</td>\n          <td>Checked In</td>\n          <td>Recorded</td>\n          <td>Approved</td>\n          <td>Verified for Billing</td>\n        </tr>\n        <tr>\n          <td>Landscape Helpers – 6 Nos.</td>\n          <td>Verified</td>\n          <td>Camp / Site Mixed</td>\n          <td>Commented – discrepancy</td>\n          <td>Pending Correction</td>\n          <td>Hold</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"note\">\n    <h4>Important Positioning Note</h4>\n    <p>This chapter does not propose starting from scratch. It confirms that legality checks, camp control, attendance recording, PM approval, and Logistics verification already exist under the current policy baseline. The proposal is only to enhance visibility, alerting, and exception handling around the same approved control chain.</p>\n  </div>\n</div>\n</body>\n</html>"};
-
-    function injectFrames() {
-      document.getElementById('frame-diesel').srcdoc = chapterDocs.diesel;
-      document.getElementById('frame-equipment').srcdoc = chapterDocs.equipment;
-      document.getElementById('frame-manpower').srcdoc = chapterDocs.manpower;
-    }
-
-    function buildTabs() {
-      const nav = document.getElementById('navTabs');
-      nav.innerHTML = '';
-      chapters.forEach(ch => {
-        const btn = document.createElement('button');
-        btn.className = 'nav-btn';
-        btn.textContent = ch.title;
-        btn.dataset.target = ch.id;
-        btn.onclick = () => showChapter(ch.id);
-        nav.appendChild(btn);
+    var toggle = document.getElementById('navToggle');
+    var links  = document.getElementById('navLinks');
+    toggle.addEventListener('click', function() {
+      var open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    links.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        links.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
       });
-      syncActiveTab('chapter-executive');
-    }
-
-    function syncActiveTab(activeId) {
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.target === activeId);
-      });
-    }
-
-    function showChapter(id) {
-      document.querySelectorAll('.chapter').forEach(el => el.classList.remove('active'));
-      const target = document.getElementById(id);
-      if (target) {
-        target.classList.add('active');
-        syncActiveTab(id);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    }
-
-    injectFrames();
-    buildTabs();
+    });
   </script>
+
 </body>
 </html>
