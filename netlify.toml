@@ -1,0 +1,18 @@
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/assessment/api/start"
+  to = "/.netlify/functions/assessment-start"
+  status = 200
+
+[[redirects]]
+  from = "/assessment/api/submit"
+  to = "/.netlify/functions/assessment-submit"
+  status = 200
+
+[[redirects]]
+  from = "/assessment/api/results"
+  to = "/.netlify/functions/assessment-results"
+  status = 200
