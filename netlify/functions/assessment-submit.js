@@ -1,8 +1,9 @@
 import { getStore } from '@netlify/blobs';
-import { byId } from './assessment-bank.js';
+import { byId, expiry } from './assessment-bank.js';
 const json=(x,s=200)=>new Response(JSON.stringify(x),{status:s,headers:{'content-type':'application/json','cache-control':'no-store'}});
 export default async(req)=>{
  if(req.method!=='POST')return json({error:'Method not allowed'},405);
+ if(Date.now()>Date.parse(expiry))return json({error:'This assessment is no longer available.'},410);
  const b=await req.json().catch(()=>({})),session=b.session;
  if(!session)return json({error:'Invalid assessment session.'},400);
  const sessions=getStore({name:'nps-assessment-sessions',consistency:'strong'}),results=getStore({name:'nps-assessment-results',consistency:'strong'});
