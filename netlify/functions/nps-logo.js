@@ -1,4 +1,4 @@
-export async function handler() {
+export default async function handler() {
   try {
     const home = await fetch('https://nps.ae/', { headers: { 'user-agent': 'Mozilla/5.0' } });
     if (!home.ok) throw new Error('Unable to load NPS website');
@@ -22,15 +22,20 @@ export async function handler() {
     }
     if (!best || bestScore < 20) throw new Error('Official logo not found');
     const url = new URL(best, 'https://nps.ae/').href;
-    return {
-      statusCode: 302,
+    return new Response(null, {
+      status: 302,
       headers: {
-        Location: url,
-        'Cache-Control': 'public, max-age=3600, s-maxage=3600'
-      },
-      body: ''
-    };
-  } catch (e) {
-    return { statusCode: 404, headers: { 'Cache-Control': 'no-store' }, body: 'Logo unavailable' };
+        location: url,
+        'cache-control': 'public, max-age=3600, s-maxage=3600'
+      }
+    });
+  } catch {
+    return new Response('NPS', {
+      status: 200,
+      headers: {
+        'content-type': 'image/svg+xml; charset=utf-8',
+        'cache-control': 'no-store'
+      }
+    });
   }
 }
