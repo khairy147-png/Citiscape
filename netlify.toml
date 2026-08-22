@@ -3,6 +3,42 @@
   node_bundler = "esbuild"
 
 [[redirects]]
+  from = "https://interview.insight-me.ae/api/start"
+  to = "/.netlify/functions/assessment-start"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://interview.insight-me.ae/api/submit"
+  to = "/.netlify/functions/assessment-submit"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://interview.insight-me.ae/api/results"
+  to = "/.netlify/functions/assessment-results"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://interview.insight-me.ae/api/logo"
+  to = "/.netlify/functions/nps-logo"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://interview.insight-me.ae/admin.html"
+  to = "/assessment/admin.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://interview.insight-me.ae/"
+  to = "/assessment/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/assessment/api/start"
   to = "/.netlify/functions/assessment-start"
   status = 200
