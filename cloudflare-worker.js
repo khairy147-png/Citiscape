@@ -32,12 +32,14 @@ async function sha256(value) {
   const hash = await crypto.subtle.digest('SHA-256', bytes);
   return [...new Uint8Array(hash)].map(b => b.toString(16).padStart(2, '0')).join('');
 }
-
+async function authorized(request) {
+  const auth = request.headers.get('x-admin-key') || '';
+  return await sha256(auth) === ADMIN_HASH;
+}
 function storeStub(env) {
   const id = env.ASSESSMENT_STORE.idFromName('nps-accounting-interview');
   return env.ASSESSMENT_STORE.get(id);
 }
-
 async function storageCall(env, action, body = {}) {
   const stub = storeStub(env);
   return stub.fetch('https://internal/' + action, {
@@ -54,39 +56,22 @@ async function startAssessment(request, env) {
   const email = String(b.email || '').trim();
   const mobile = String(b.mobile || '').trim();
   const salary = String(b.salary ?? '').trim();
-  if (!name || !/^\S+@\S+\.\S+$/.test(email) || !salary) {
-    return json({ error: 'Please complete the required candidate details.' }, 400);
-  }
+  if (!name || !/^\S+@\S+\.\S+$/.test(email) || !salary) return json({ error: 'Please complete the required candidate details.' }, 400);
 
   const technical = [...pickLevel(1), ...pickLevel(2), ...pickLevel(3)];
   const level4 = shuffle(banks[4] || []);
-  if (technical.length !== 36 || level4.length !== 24) {
-    return json({ error: 'Assessment configuration error.' }, 500);
-  }
+  if (technical.length !== 36 || level4.length !== 24) return json({ error: 'Assessment configuration error.' }, 500);
 
   const all = [...technical, ...level4];
   const session = crypto.randomUUID();
   const startedAt = new Date().toISOString();
-  const record = {
-    session,
-    startedAt,
-    candidate: { name, email, mobile, salary },
-    ids: all.map(q => q.id),
-    completed: false
-  };
+  const record = { session, startedAt, candidate: { name, email, mobile, salary }, ids: all.map(q => q.id), completed: false };
   const saved = await storageCall(env, 'put-session', { session, record });
   if (!saved.ok) return json({ error: 'Unable to start assessment.' }, 500);
 
   const questions = all.map(q => {
     const opts = shuffle(q.options.map((text, original) => ({ text, original })));
-    return {
-      id: q.id,
-      level: q.level,
-      topic: q.topic,
-      question: q.question,
-      options: opts.map(x => x.text),
-      map: opts.map(x => x.original)
-    };
+    return { id: q.id, level: q.level, topic: q.topic, question: q.question, options: opts.map(x => x.text), map: opts.map(x => x.original) };
   });
   return json({ session, startedAt, questions });
 }
@@ -102,9 +87,7 @@ async function submitAssessment(request, env) {
   const { record: s } = await sr.json();
   if (!s) return json({ error: 'Invalid assessment session.' }, 403);
   if (s.completed) return json({ error: 'Assessment already submitted.' }, 410);
-  if (!Array.isArray(b.answers) || b.answers.length !== s.ids.length) {
-    return json({ error: 'Please answer all questions before submitting.' }, 400);
-  }
+  if (!Array.isArray(b.answers) || b.answers.length !== s.ids.length) return json({ error: 'Please answer all questions before submitting.' }, 400);
 
   let acct = 0, cog = 0, cogN = 0;
   const lc = { 1: 0, 2: 0, 3: 0 }, lt = { 1: 0, 2: 0, 3: 0 };
@@ -115,7 +98,6 @@ async function submitAssessment(request, env) {
     if (!q) return json({ error: 'Assessment configuration mismatch.' }, 500);
     const sel = Number(b.answers[i]?.original);
     const candidate = q.options[sel] ?? 'No answer';
-
     if (q.level <= 3) {
       lt[q.level]++;
       const ok = sel === Number(q.answer);
@@ -123,7 +105,6 @@ async function submitAssessment(request, env) {
       detail.push({ n: i + 1, level: q.level, topic: q.topic, question: q.question, candidate, correct: q.options[q.answer], ok, score: ok ? 1 : 0, max: 1, type: 'technical' });
       continue;
     }
-
     const kind = q.assessment_type || q.type || 'cognitive';
     if (kind === 'cognitive') {
       cogN++;
@@ -132,7 +113,6 @@ async function submitAssessment(request, env) {
       detail.push({ n: i + 1, level: 4, topic: q.topic, question: q.question, candidate, correct: q.options[q.answer], ok, score: ok ? 1 : 0, max: 1, type: 'cognitive' });
       continue;
     }
-
     const d = q.profile?.dimension || 'Behavior';
     const scores = q.profile?.scores || [0, 0, 0];
     const sc = Number(scores[sel] ?? 0);
@@ -147,10 +127,7 @@ async function submitAssessment(request, env) {
   const cognitive = Math.round(cog / Math.max(1, cogN) * 100);
   let bp = 0, bm = 0;
   const dimensions = {};
-  Object.keys(dims).forEach(d => {
-    bp += dims[d]; bm += dmax[d];
-    dimensions[d] = Math.round(dims[d] / Math.max(1, dmax[d]) * 100);
-  });
+  Object.keys(dims).forEach(d => { bp += dims[d]; bm += dmax[d]; dimensions[d] = Math.round(dims[d] / Math.max(1, dmax[d]) * 100); });
   const behavior = Math.round(bp / Math.max(1, bm) * 100);
 
   let technical = 'Not Recommended at This Stage';
@@ -159,30 +136,10 @@ async function submitAssessment(request, env) {
   else if (levels[1] >= 60 && accounting >= 55) technical = 'Recommended — General Accountant';
 
   const fit = Math.round(accounting * .65 + cognitive * .20 + behavior * .15);
-  const hiring = fit >= 85 && accounting >= 70 ? 'Highly Recommended'
-    : fit >= 72 && accounting >= 60 ? 'Recommended'
-    : fit >= 60 ? 'Consider with Interview Review'
-    : 'Not Recommended at This Stage';
-
+  const hiring = fit >= 85 && accounting >= 70 ? 'Highly Recommended' : fit >= 72 && accounting >= 60 ? 'Recommended' : fit >= 60 ? 'Consider with Interview Review' : 'Not Recommended at This Stage';
   const completedAt = new Date().toISOString();
   const elapsed = Math.max(0, Number(b.elapsed) || Math.round((Date.now() - Date.parse(s.startedAt)) / 1000));
-  const report = {
-    id: crypto.randomUUID(),
-    candidate: s.candidate,
-    startedAt: s.startedAt,
-    completedAt,
-    elapsed,
-    accounting,
-    accountingCorrect: acct,
-    levels,
-    cognitive,
-    behavior,
-    dimensions,
-    technical,
-    fit,
-    hiring,
-    detail
-  };
+  const report = { id: crypto.randomUUID(), candidate: s.candidate, startedAt: s.startedAt, completedAt, elapsed, accounting, accountingCorrect: acct, levels, cognitive, behavior, dimensions, technical, fit, hiring, detail };
 
   const saved = await storageCall(env, 'complete-session', { session, report, completedAt });
   if (!saved.ok) return json({ error: 'Unable to save assessment result.' }, 500);
@@ -190,11 +147,16 @@ async function submitAssessment(request, env) {
 }
 
 async function getResults(request, env) {
-  const auth = request.headers.get('x-admin-key') || '';
-  if (await sha256(auth) !== ADMIN_HASH) return json({ error: 'Unauthorized' }, 401);
+  if (!(await authorized(request))) return json({ error: 'Unauthorized' }, 401);
   const r = await storageCall(env, 'list-results');
   if (!r.ok) return json({ error: 'Unable to load results.' }, 500);
   return new Response(r.body, { status: 200, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
+}
+async function resetResults(request, env) {
+  if (!(await authorized(request))) return json({ error: 'Unauthorized' }, 401);
+  const r = await storageCall(env, 'reset-all');
+  if (!r.ok) return json({ error: 'Unable to clear results.' }, 500);
+  return json({ ok: true });
 }
 
 async function logoResponse() {
@@ -251,6 +213,12 @@ export class AssessmentStore {
       results.sort((a, b) => String(b.completedAt).localeCompare(String(a.completedAt)));
       return json({ results });
     }
+    if (action === 'reset-all') {
+      const entries = await this.state.storage.list();
+      const keys = [...entries.keys()];
+      if (keys.length) await this.state.storage.delete(keys);
+      return json({ ok: true, deleted: keys.length });
+    }
     return json({ error: 'Not found' }, 404);
   }
 }
@@ -262,6 +230,7 @@ export default {
     if (request.method === 'POST' && (p === '/api/start' || p === '/assessment/api/start')) return startAssessment(request, env);
     if (request.method === 'POST' && (p === '/api/submit' || p === '/assessment/api/submit')) return submitAssessment(request, env);
     if (request.method === 'GET' && (p === '/api/results' || p === '/assessment/api/results')) return getResults(request, env);
+    if (request.method === 'POST' && (p === '/api/reset' || p === '/assessment/api/reset')) return resetResults(request, env);
     if (request.method === 'GET' && (p === '/api/logo' || p === '/assessment/api/logo')) return logoResponse();
     return env.ASSETS.fetch(request);
   }
