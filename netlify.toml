@@ -16,3 +16,8 @@
   from = "/assessment/api/results"
   to = "/.netlify/functions/assessment-results"
   status = 200
+
+[[redirects]]
+  from = "/assessment/api/logo"
+  to = "/.netlify/functions/nps-logo"
+  status = 200
