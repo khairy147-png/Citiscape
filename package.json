@@ -1,8 +1,11 @@
 {
-  "name": "insight-site-nps-assessment",
+  "name": "nps-accounting-interview",
   "private": true,
   "type": "module",
-  "dependencies": {
-    "@netlify/blobs": "^10.0.0"
+  "scripts": {
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
   }
 }
