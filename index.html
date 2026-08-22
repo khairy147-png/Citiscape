@@ -38,1305 +38,162 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
-    /* ─────────────────────────────────────────
-       TOKENS
-    ───────────────────────────────────────── */
-    :root {
-      --red:         #B22222;
-      --red-dark:    #8B1A1A;
-      --gold:        #C9A227;
-      --gold-light:  #E8C84A;
-      --gold-muted:  #9B7A1A;
-      --ink:         #1A1210;
-      --ink-soft:    #3D2E2A;
-      --smoke:       #F7F4F0;
-      --white:       #FDFCFB;
-      --divider:     rgba(201,162,39,.25);
-
-      --font-display: 'Cormorant Garamond', Georgia, serif;
-      --font-body:    'DM Sans', Arial, sans-serif;
-
-      --max-w: 1160px;
-      --nav-h: 72px;
-    }
-
-    /* ─────────────────────────────────────────
-       RESET & BASE
-    ───────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; font-size: 16px; }
-
-    body {
-      font-family: var(--font-body);
-      color: var(--ink);
-      background: var(--white);
-      -webkit-font-smoothing: antialiased;
-    }
-
-    img { display: block; max-width: 100%; }
-    a   { color: inherit; text-decoration: none; }
-
-    /* ─────────────────────────────────────────
-       UTILITY
-    ───────────────────────────────────────── */
-    .container {
-      width: 100%;
-      max-width: var(--max-w);
-      margin-inline: auto;
-      padding-inline: clamp(1.25rem, 5vw, 3rem);
-    }
-
-    .section-label {
-      display: inline-block;
-      font-family: var(--font-body);
-      font-size: .6875rem;
-      font-weight: 500;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1rem;
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 4vw, 3.25rem);
-      font-weight: 600;
-      line-height: 1.15;
-      color: var(--ink);
-    }
-
-    .section-title em {
-      font-style: italic;
-      color: var(--red);
-    }
-
-    .section-body {
-      font-size: 1.0625rem;
-      font-weight: 300;
-      line-height: 1.85;
-      color: var(--ink-soft);
-      max-width: 64ch;
-    }
-
-    /* Reveal animations – pure CSS */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(28px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-
-    @keyframes lineGrow {
-      from { transform: scaleX(0); }
-      to   { transform: scaleX(1); }
-    }
-
-    /* ─────────────────────────────────────────
-       GEOMETRIC PATTERN (CSS-only)
-    ───────────────────────────────────────── */
-    .geo-bg {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
-
-    .geo-bg::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        repeating-linear-gradient(
-          45deg,
-          transparent,
-          transparent 38px,
-          rgba(201,162,39,.055) 38px,
-          rgba(201,162,39,.055) 39px
-        ),
-        repeating-linear-gradient(
-          -45deg,
-          transparent,
-          transparent 38px,
-          rgba(201,162,39,.055) 38px,
-          rgba(201,162,39,.055) 39px
-        );
-    }
-
-    /* ─────────────────────────────────────────
-       NAVIGATION
-    ───────────────────────────────────────── */
-    .nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: var(--nav-h);
-      z-index: 100;
-      background: rgba(253,252,251,.96);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--divider);
-    }
-
-    .nav__inner {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-    }
-
-    .nav__brand {
-      display: flex;
-      align-items: center;
-      gap: .875rem;
-      flex-shrink: 0;
-    }
-
-    .nav__icon {
-      width: 36px;
-      height: 36px;
-      object-fit: contain;
-      flex-shrink: 0;
-    }
-
-    .nav__logo {
-      height: 40px;
-      width: auto;
-      object-fit: contain;
-    }
-
-    .nav__links {
-      display: flex;
-      align-items: center;
-      gap: clamp(.75rem, 2.5vw, 2rem);
-      list-style: none;
-    }
-
-    .nav__links a {
-      font-family: var(--font-body);
-      font-size: .8125rem;
-      font-weight: 500;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      transition: color .2s;
-      position: relative;
-      padding-bottom: 2px;
-    }
-
-    .nav__links a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px; left: 0; right: 0;
-      height: 1.5px;
-      background: var(--gold);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform .25s ease;
-    }
-
-    .nav__links a:hover { color: var(--ink); }
-    .nav__links a:hover::after { transform: scaleX(1); }
-
-    /* Mobile menu toggle */
-    .nav__toggle {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 4px;
-      background: none;
-      border: none;
-    }
-
-    .nav__toggle span {
-      display: block;
-      width: 24px;
-      height: 1.5px;
-      background: var(--ink);
-      transition: transform .25s, opacity .25s;
-    }
-
-    /* ─────────────────────────────────────────
-       HERO
-    ───────────────────────────────────────── */
-    .hero {
-      position: relative;
-      min-height: 100svh;
-      display: flex;
-      align-items: center;
-      background: var(--ink);
-      padding-top: var(--nav-h);
-      overflow: hidden;
-    }
-
-    /* Gradient wash */
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 70% 60% at 80% 50%, rgba(178,34,34,.18) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 80% at 5%  90%, rgba(201,162,39,.12) 0%, transparent 65%);
-      z-index: 1;
-    }
-
-    .hero .geo-bg::before { opacity: .4; }
-
-    .hero__content {
-      position: relative;
-      z-index: 2;
-      padding-block: 6rem;
-    }
-
-    .hero__eyebrow {
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-      margin-bottom: 2rem;
-      animation: fadeIn .8s ease both;
-    }
-
-    .hero__eyebrow-line {
-      width: 40px;
-      height: 1px;
-      background: var(--gold);
-    }
-
-    .hero__eyebrow-text {
-      font-family: var(--font-body);
-      font-size: .6875rem;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      font-weight: 500;
-    }
-
-    .hero__headline {
-      font-family: var(--font-display);
-      font-size: clamp(2.75rem, 6vw, 5.5rem);
-      font-weight: 300;
-      line-height: 1.05;
-      color: var(--white);
-      margin-bottom: 1.5rem;
-      animation: fadeUp .9s .1s ease both;
-    }
-
-    .hero__headline strong {
-      font-weight: 700;
-      display: block;
-    }
-
-    .hero__headline em {
-      font-style: italic;
-      color: var(--gold);
-    }
-
-    .hero__subtitle {
-      font-family: var(--font-body);
-      font-size: clamp(1rem, 2vw, 1.1875rem);
-      font-weight: 300;
-      color: rgba(253,252,251,.65);
-      letter-spacing: .04em;
-      margin-bottom: 3rem;
-      animation: fadeUp .9s .2s ease both;
-    }
-
-    .hero__cta {
-      display: inline-flex;
-      align-items: center;
-      gap: .75rem;
-      background: var(--gold);
-      color: var(--ink);
-      font-family: var(--font-body);
-      font-size: .875rem;
-      font-weight: 500;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      padding: 1rem 2.25rem;
-      border: none;
-      cursor: pointer;
-      transition: background .25s, transform .2s;
-      animation: fadeUp .9s .3s ease both;
-    }
-
-    .hero__cta:hover {
-      background: var(--gold-light);
-      transform: translateY(-2px);
-    }
-
-    .hero__cta-arrow {
-      display: inline-block;
-      transition: transform .2s;
-    }
-
-    .hero__cta:hover .hero__cta-arrow { transform: translateX(4px); }
-
-    /* Decorative vertical text */
-    .hero__vertical {
-      position: absolute;
-      right: clamp(1rem, 4vw, 3rem);
-      top: 50%;
-      transform: translateY(-50%) rotate(90deg);
-      transform-origin: center;
-      font-size: .625rem;
-      letter-spacing: .3em;
-      text-transform: uppercase;
-      color: rgba(201,162,39,.4);
-      white-space: nowrap;
-      z-index: 2;
-    }
-
-    /* Gold rule at bottom of hero */
-    .hero__rule {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--red) 70%, transparent);
-      z-index: 2;
-    }
-
-    /* ─────────────────────────────────────────
-       ABOUT
-    ───────────────────────────────────────── */
-    .about {
-      padding-block: clamp(4rem, 9vw, 7rem);
-      background: var(--smoke);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .about__inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(2.5rem, 6vw, 5rem);
-      align-items: start;
-    }
-
-    .about__left { position: relative; }
-
-    .about__logo-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1.5rem;
-    }
-
-    .about__logo {
-      max-width: 280px;
-      width: 100%;
-    }
-
-    .about__badge {
-      display: inline-flex;
-      flex-direction: column;
-      gap: .25rem;
-      border-left: 3px solid var(--gold);
-      padding-left: 1rem;
-    }
-
-    .about__badge-label {
-      font-size: .625rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--gold-muted);
-      font-weight: 500;
-    }
-
-    .about__badge-value {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--ink);
-    }
-
-    .about__right {}
-
-    .about__intro {
-      font-family: var(--font-display);
-      font-size: clamp(1.25rem, 2.5vw, 1.625rem);
-      font-weight: 300;
-      font-style: italic;
-      color: var(--red);
-      line-height: 1.5;
-      margin-bottom: 1.5rem;
-    }
-
-    .about__text {
-      font-size: 1.0625rem;
-      font-weight: 300;
-      line-height: 1.85;
-      color: var(--ink-soft);
-    }
-
-    .about__text + .about__text { margin-top: 1rem; }
-
-    .about__meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      margin-top: 2.5rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--divider);
-    }
-
-    .about__meta-item {
-      display: flex;
-      flex-direction: column;
-      gap: .25rem;
-    }
-
-    .about__meta-label {
-      font-size: .625rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--gold-muted);
-      font-weight: 500;
-    }
-
-    .about__meta-value {
-      font-family: var(--font-display);
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: var(--ink);
-    }
-
-    /* ─────────────────────────────────────────
-       SERVICES
-    ───────────────────────────────────────── */
-    .services {
-      padding-block: clamp(4rem, 9vw, 7rem);
-      background: var(--white);
-      position: relative;
-    }
-
-    .services__head {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 1.5rem;
-      margin-bottom: 3.5rem;
-    }
-
-    .services__count {
-      font-family: var(--font-display);
-      font-size: clamp(5rem, 10vw, 8rem);
-      font-weight: 300;
-      line-height: 1;
-      color: rgba(178,34,34,.07);
-      letter-spacing: -.02em;
-      user-select: none;
-    }
-
-    .services__grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5px;
-      background: var(--divider);
-    }
-
-    .service-card {
-      background: var(--white);
-      padding: 2.5rem 2rem;
-      position: relative;
-      overflow: hidden;
-      transition: background .3s;
-    }
-
-    .service-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px;
-      height: 0;
-      background: var(--red);
-      transition: height .35s ease;
-    }
-
-    .service-card:hover { background: var(--smoke); }
-    .service-card:hover::before { height: 100%; }
-
-    .service-card__num {
-      font-family: var(--font-display);
-      font-size: 2.5rem;
-      font-weight: 300;
-      color: rgba(201,162,39,.25);
-      line-height: 1;
-      margin-bottom: 1.25rem;
-      transition: color .3s;
-    }
-
-    .service-card:hover .service-card__num { color: rgba(201,162,39,.5); }
-
-    .service-card__title {
-      font-family: var(--font-display);
-      font-size: 1.3125rem;
-      font-weight: 600;
-      color: var(--ink);
-      line-height: 1.3;
-      margin-bottom: .875rem;
-    }
-
-    .service-card__body {
-      font-size: .9375rem;
-      font-weight: 300;
-      line-height: 1.75;
-      color: var(--ink-soft);
-    }
-
-    /* ─────────────────────────────────────────
-       EXPERTISE
-    ───────────────────────────────────────── */
-    .expertise {
-      padding-block: clamp(4rem, 9vw, 7rem);
-      background: var(--ink);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .expertise .geo-bg::before { opacity: .35; }
-
-    .expertise__inner {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1fr 1.1fr;
-      gap: clamp(3rem, 7vw, 6rem);
-      align-items: center;
-    }
-
-    .expertise__left {}
-
-    .expertise .section-label { color: var(--gold); }
-    .expertise .section-title { color: var(--white); }
-
-    .expertise__desc {
-      font-size: 1.0625rem;
-      font-weight: 300;
-      line-height: 1.85;
-      color: rgba(253,252,251,.65);
-      margin-top: 1.5rem;
-    }
-
-    .expertise__right {}
-
-    .expertise__pillars {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-    }
-
-    .pillar {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      padding: 1.5rem;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(201,162,39,.12);
-      transition: background .3s;
-      cursor: default;
-    }
-
-    .pillar:hover { background: rgba(201,162,39,.07); }
-
-    .pillar__icon {
-      flex-shrink: 0;
-      width: 44px;
-      height: 44px;
-      border: 1px solid rgba(201,162,39,.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .pillar__icon svg {
-      width: 20px;
-      height: 20px;
-      stroke: var(--gold);
-      fill: none;
-      stroke-width: 1.5;
-    }
-
-    .pillar__title {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--white);
-    }
-
-    .pillar__sub {
-      font-size: .875rem;
-      font-weight: 300;
-      color: rgba(253,252,251,.5);
-      margin-top: .2rem;
-    }
-
-    /* ─────────────────────────────────────────
-       VISION & MISSION
-    ───────────────────────────────────────── */
-    .vision {
-      padding-block: clamp(4rem, 9vw, 7rem);
-      background: var(--smoke);
-      position: relative;
-    }
-
-    .vision__grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin-top: 3rem;
-    }
-
-    .vision-card {
-      padding: 2.5rem 2rem;
-      background: var(--white);
-      border: 1px solid var(--divider);
-      position: relative;
-    }
-
-    .vision-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--red), var(--gold));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform .4s ease;
-    }
-
-    .vision-card:hover::after { transform: scaleX(1); }
-
-    .vision-card__type {
-      font-size: .625rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--gold-muted);
-      font-weight: 500;
-      margin-bottom: .75rem;
-    }
-
-    .vision-card__headline {
-      font-family: var(--font-display);
-      font-size: 1.75rem;
-      font-weight: 600;
-      color: var(--red);
-      margin-bottom: 1rem;
-      line-height: 1.2;
-    }
-
-    .vision-card__body {
-      font-size: 1rem;
-      font-weight: 300;
-      line-height: 1.8;
-      color: var(--ink-soft);
-    }
-
-    .values {
-      margin-top: 3rem;
-    }
-
-    .values__title {
-      font-family: var(--font-display);
-      font-size: 1.375rem;
-      font-weight: 600;
-      color: var(--ink);
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-
-    .values__list {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-    }
-
-    .value-item {
-      text-align: center;
-      padding: 1.75rem 1rem;
-      background: var(--white);
-      border: 1px solid var(--divider);
-      transition: border-color .3s, transform .25s;
-    }
-
-    .value-item:hover {
-      border-color: var(--gold);
-      transform: translateY(-4px);
-    }
-
-    .value-item__symbol {
-      width: 36px;
-      height: 36px;
-      margin-inline: auto;
-      margin-bottom: 1rem;
-      border: 1.5px solid var(--gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .value-item__symbol svg {
-      width: 16px;
-      height: 16px;
-      stroke: var(--gold);
-      fill: none;
-      stroke-width: 1.5;
-    }
-
-    .value-item__name {
-      font-family: var(--font-display);
-      font-size: 1.0625rem;
-      font-weight: 600;
-      color: var(--ink);
-    }
-
-    /* ─────────────────────────────────────────
-       CONTACT
-    ───────────────────────────────────────── */
-    .contact {
-      padding-block: clamp(4rem, 9vw, 7rem);
-      background: var(--ink);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .contact .geo-bg::before { opacity: .35; }
-
-    .contact__inner {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: clamp(3rem, 7vw, 6rem);
-      align-items: center;
-    }
-
-    .contact .section-label { color: var(--gold); }
-    .contact .section-title { color: var(--white); }
-
-    .contact__lead {
-      font-size: 1.0625rem;
-      font-weight: 300;
-      line-height: 1.85;
-      color: rgba(253,252,251,.6);
-      margin-top: 1.25rem;
-    }
-
-    .contact__channels {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      padding: 1.625rem 1.75rem;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(201,162,39,.12);
-      text-decoration: none;
-      transition: background .3s, border-color .3s;
-    }
-
-    .contact-item:hover {
-      background: rgba(201,162,39,.08);
-      border-color: rgba(201,162,39,.3);
-    }
-
-    .contact-item__icon {
-      flex-shrink: 0;
-      width: 44px;
-      height: 44px;
-      background: rgba(201,162,39,.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .contact-item__icon svg {
-      width: 18px;
-      height: 18px;
-      stroke: var(--gold);
-      fill: none;
-      stroke-width: 1.5;
-    }
-
-    .contact-item__label {
-      font-size: .6875rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: rgba(201,162,39,.7);
-      font-weight: 500;
-      margin-bottom: .25rem;
-    }
-
-    .contact-item__value {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 400;
-      color: var(--white);
-    }
-
-    /* ─────────────────────────────────────────
-       FOOTER
-    ───────────────────────────────────────── */
-    .footer {
-      background: #0E0B0A;
-      padding-block: 2rem;
-      border-top: 1px solid rgba(201,162,39,.15);
-    }
-
-    .footer__inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .footer__brand {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--gold);
-      letter-spacing: .04em;
-    }
-
-    .footer__copy {
-      font-size: .8125rem;
-      color: rgba(253,252,251,.3);
-      font-weight: 300;
-    }
-
-    /* ─────────────────────────────────────────
-       RESPONSIVE
-    ───────────────────────────────────────── */
-    @media (max-width: 960px) {
-      .about__inner   { grid-template-columns: 1fr; }
-      .expertise__inner { grid-template-columns: 1fr; }
-      .contact__inner { grid-template-columns: 1fr; }
-      .services__grid { grid-template-columns: repeat(2, 1fr); }
-      .values__list   { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 640px) {
-      :root { --nav-h: 60px; }
-
-      .nav__links { display: none; }
-      .nav__toggle { display: flex; }
-
-      /* Simple mobile nav */
-      .nav__links.open {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: var(--nav-h);
-        left: 0; right: 0;
-        background: var(--white);
-        border-bottom: 1px solid var(--divider);
-        padding: 1.25rem 1.5rem;
-        gap: 1.25rem;
-        box-shadow: 0 8px 24px rgba(0,0,0,.1);
-      }
-
-      .services__grid { grid-template-columns: 1fr; }
-      .vision__grid   { grid-template-columns: 1fr; }
-      .values__list   { grid-template-columns: repeat(2, 1fr); }
-
-      .hero__vertical { display: none; }
-
-      .about__logo { max-width: 200px; }
-    }
+    :root { --red:#B22222; --red-dark:#8B1A1A; --gold:#C9A227; --gold-light:#E8C84A; --gold-muted:#9B7A1A; --ink:#1A1210; --ink-soft:#3D2E2A; --smoke:#F7F4F0; --white:#FDFCFB; --divider:rgba(201,162,39,.25); --font-display:'Cormorant Garamond', Georgia, serif; --font-body:'DM Sans', Arial, sans-serif; --max-w:1160px; --nav-h:72px; }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; font-size:16px; }
+    body { font-family:var(--font-body); color:var(--ink); background:var(--white); -webkit-font-smoothing:antialiased; }
+    img { display:block; max-width:100%; } a { color:inherit; text-decoration:none; }
+    .container { width:100%; max-width:var(--max-w); margin-inline:auto; padding-inline:clamp(1.25rem, 5vw, 3rem); }
+    .section-label { display:inline-block; font-family:var(--font-body); font-size:.6875rem; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; }
+    .section-title { font-family:var(--font-display); font-size:clamp(2rem, 4vw, 3.25rem); font-weight:600; line-height:1.15; color:var(--ink); }
+    .section-title em { font-style:italic; color:var(--red); }
+    .section-body { font-size:1.0625rem; font-weight:300; line-height:1.85; color:var(--ink-soft); max-width:64ch; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    @keyframes lineGrow { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+    .geo-bg { position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:0; }
+    .geo-bg::before { content:''; position:absolute; inset:0; background-image:repeating-linear-gradient(45deg, transparent, transparent 38px, rgba(201,162,39,.055) 38px, rgba(201,162,39,.055) 39px), repeating-linear-gradient(-45deg, transparent, transparent 38px, rgba(201,162,39,.055) 38px, rgba(201,162,39,.055) 39px); }
+    .nav { position:fixed; top:0; left:0; right:0; height:var(--nav-h); z-index:100; background:rgba(253,252,251,.96); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--divider); }
+    .nav__inner { height:100%; display:flex; align-items:center; justify-content:space-between; gap:2rem; }
+    .nav__brand { display:flex; align-items:center; gap:.875rem; flex-shrink:0; }
+    .nav__icon { width:36px; height:36px; object-fit:contain; flex-shrink:0; }
+    .nav__logo { height:40px; width:auto; object-fit:contain; }
+    .nav__links { display:flex; align-items:center; gap:clamp(.75rem, 2.5vw, 2rem); list-style:none; }
+    .nav__links a { font-family:var(--font-body); font-size:.8125rem; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); transition:color .2s; position:relative; padding-bottom:2px; }
+    .nav__links a::after { content:''; position:absolute; bottom:-2px; left:0; right:0; height:1.5px; background:var(--gold); transform:scaleX(0); transform-origin:left; transition:transform .25s ease; }
+    .nav__links a:hover { color:var(--ink); } .nav__links a:hover::after { transform:scaleX(1); }
+    .nav__toggle { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; background:none; border:none; }
+    .nav__toggle span { display:block; width:24px; height:1.5px; background:var(--ink); transition:transform .25s, opacity .25s; }
+    .hero { position:relative; min-height:100svh; display:flex; align-items:center; background:var(--ink); padding-top:var(--nav-h); overflow:hidden; }
+    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 60% at 80% 50%, rgba(178,34,34,.18) 0%, transparent 70%), radial-gradient(ellipse 50% 80% at 5% 90%, rgba(201,162,39,.12) 0%, transparent 65%); z-index:1; }
+    .hero .geo-bg::before { opacity:.4; }
+    .hero__content { position:relative; z-index:2; padding-block:6rem; }
+    .hero__eyebrow { display:flex; align-items:center; gap:.75rem; margin-bottom:2rem; animation:fadeIn .8s ease both; }
+    .hero__eyebrow-line { width:40px; height:1px; background:var(--gold); }
+    .hero__eyebrow-text { font-family:var(--font-body); font-size:.6875rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); font-weight:500; }
+    .hero__headline { font-family:var(--font-display); font-size:clamp(2.75rem, 6vw, 5.5rem); font-weight:300; line-height:1.05; color:var(--white); margin-bottom:1.5rem; animation:fadeUp .9s .1s ease both; }
+    .hero__headline strong { font-weight:700; display:block; }
+    .hero__headline em { font-style:italic; color:var(--gold); }
+    .hero__subtitle { font-family:var(--font-body); font-size:clamp(1rem, 2vw, 1.1875rem); font-weight:300; color:rgba(253,252,251,.65); letter-spacing:.04em; margin-bottom:1.25rem; animation:fadeUp .9s .2s ease both; }
+    .hero__lead { font-size:1.025rem; line-height:1.9; color:rgba(253,252,251,.78); max-width:68ch; margin-bottom:3rem; animation:fadeUp .9s .25s ease both; }
+    .hero__cta { display:inline-flex; align-items:center; gap:.75rem; background:var(--gold); color:var(--ink); font-family:var(--font-body); font-size:.875rem; font-weight:500; letter-spacing:.1em; text-transform:uppercase; padding:1rem 2.25rem; border:none; cursor:pointer; transition:background .25s, transform .2s; animation:fadeUp .9s .3s ease both; }
+    .hero__cta:hover { background:var(--gold-light); transform:translateY(-2px); }
+    .hero__cta-arrow { display:inline-block; transition:transform .2s; } .hero__cta:hover .hero__cta-arrow { transform:translateX(4px); }
+    .hero__vertical { position:absolute; right:clamp(1rem, 4vw, 3rem); top:50%; transform:translateY(-50%) rotate(90deg); transform-origin:center; font-size:.625rem; letter-spacing:.3em; text-transform:uppercase; color:rgba(201,162,39,.4); white-space:nowrap; z-index:2; }
+    .hero__rule { position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg, transparent, var(--gold) 30%, var(--red) 70%, transparent); z-index:2; }
+    .about, .services, .expertise, .vision, .contact { padding-block:clamp(4rem, 9vw, 7rem); }
+    .about { background:var(--smoke); position:relative; overflow:hidden; }
+    .about__inner { display:grid; grid-template-columns:1fr 1fr; gap:clamp(2.5rem, 6vw, 5rem); align-items:start; }
+    .about__logo-wrap { display:flex; flex-direction:column; align-items:flex-start; gap:1.5rem; }
+    .about__logo { max-width:280px; width:100%; }
+    .about__badge { display:inline-flex; flex-direction:column; gap:.25rem; border-left:3px solid var(--gold); padding-left:1rem; }
+    .about__badge-label { font-size:.625rem; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-muted); font-weight:500; }
+    .about__badge-value { font-family:var(--font-display); font-size:1.25rem; font-weight:600; color:var(--ink); }
+    .about__intro { font-family:var(--font-display); font-size:clamp(1.25rem, 2.5vw, 1.625rem); font-weight:300; font-style:italic; color:var(--red); line-height:1.5; margin-bottom:1.5rem; }
+    .about__text { font-size:1.0625rem; font-weight:300; line-height:1.85; color:var(--ink-soft); }
+    .about__text + .about__text { margin-top:1rem; }
+    .about__meta { display:flex; flex-wrap:wrap; gap:1.5rem; margin-top:2.5rem; padding-top:2rem; border-top:1px solid var(--divider); }
+    .about__meta-item { display:flex; flex-direction:column; gap:.25rem; }
+    .about__meta-label { font-size:.625rem; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-muted); font-weight:500; }
+    .about__meta-value { font-family:var(--font-display); font-size:1.125rem; font-weight:600; color:var(--ink); }
+    .services { background:var(--white); position:relative; }
+    .services__head { display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:1.5rem; margin-bottom:3.5rem; }
+    .services__count { font-family:var(--font-display); font-size:clamp(5rem, 10vw, 8rem); font-weight:300; line-height:1; color:rgba(178,34,34,.07); letter-spacing:-.02em; user-select:none; }
+    .services__grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:1.5px; background:var(--divider); }
+    .service-card { background:var(--white); padding:2.5rem 2rem; position:relative; overflow:hidden; transition:background .3s; }
+    .service-card::before { content:''; position:absolute; top:0; left:0; width:3px; height:0; background:var(--red); transition:height .35s ease; }
+    .service-card:hover { background:var(--smoke); } .service-card:hover::before { height:100%; }
+    .service-card__num { font-family:var(--font-display); font-size:2.5rem; font-weight:300; color:rgba(201,162,39,.25); line-height:1; margin-bottom:1.25rem; transition:color .3s; }
+    .service-card:hover .service-card__num { color:rgba(201,162,39,.5); }
+    .service-card__title { font-family:var(--font-display); font-size:1.3125rem; font-weight:600; color:var(--ink); line-height:1.3; margin-bottom:.875rem; }
+    .service-card__body { font-size:.9375rem; font-weight:300; line-height:1.75; color:var(--ink-soft); }
+    .expertise { background:var(--ink); position:relative; overflow:hidden; }
+    .expertise .geo-bg::before { opacity:.35; }
+    .expertise__inner { position:relative; z-index:1; display:grid; grid-template-columns:1fr 1.1fr; gap:clamp(3rem, 7vw, 6rem); align-items:center; }
+    .expertise .section-label, .contact .section-label { color:var(--gold); }
+    .expertise .section-title, .contact .section-title { color:var(--white); }
+    .expertise__desc, .contact__lead { font-size:1.0625rem; font-weight:300; line-height:1.85; color:rgba(253,252,251,.65); margin-top:1.5rem; }
+    .expertise__pillars { display:flex; flex-direction:column; gap:1px; }
+    .pillar { display:flex; align-items:center; gap:1.5rem; padding:1.5rem; background:rgba(255,255,255,.04); border:1px solid rgba(201,162,39,.12); transition:background .3s; cursor:default; }
+    .pillar:hover { background:rgba(201,162,39,.07); }
+    .pillar__icon { flex-shrink:0; width:44px; height:44px; border:1px solid rgba(201,162,39,.3); display:flex; align-items:center; justify-content:center; }
+    .pillar__icon svg { width:20px; height:20px; stroke:var(--gold); fill:none; stroke-width:1.5; }
+    .pillar__title { font-family:var(--font-display); font-size:1.1rem; font-weight:600; color:var(--white); }
+    .pillar__sub { font-size:.875rem; font-weight:300; color:rgba(253,252,251,.5); margin-top:.2rem; }
+    .vision { background:var(--smoke); position:relative; }
+    .vision__grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:3rem; }
+    .vision-card { padding:2.5rem 2rem; background:var(--white); border:1px solid var(--divider); position:relative; }
+    .vision-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--red), var(--gold)); transform:scaleX(0); transform-origin:left; transition:transform .4s ease; }
+    .vision-card:hover::after { transform:scaleX(1); }
+    .vision-card__type { font-size:.625rem; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-muted); font-weight:500; margin-bottom:.75rem; }
+    .vision-card__headline { font-family:var(--font-display); font-size:1.75rem; font-weight:600; color:var(--red); margin-bottom:1rem; line-height:1.2; }
+    .vision-card__body { font-size:1rem; font-weight:300; line-height:1.8; color:var(--ink-soft); }
+    .values { margin-top:3rem; }
+    .values__title { font-family:var(--font-display); font-size:1.375rem; font-weight:600; color:var(--ink); margin-bottom:1.5rem; text-align:center; }
+    .values__list { display:grid; grid-template-columns:repeat(4, 1fr); gap:1rem; }
+    .value-item { text-align:center; padding:1.75rem 1rem; background:var(--white); border:1px solid var(--divider); transition:border-color .3s, transform .25s; }
+    .value-item:hover { border-color:var(--gold); transform:translateY(-4px); }
+    .value-item__symbol { width:36px; height:36px; margin-inline:auto; margin-bottom:1rem; border:1.5px solid var(--gold); display:flex; align-items:center; justify-content:center; }
+    .value-item__symbol svg { width:16px; height:16px; stroke:var(--gold); fill:none; stroke-width:1.5; }
+    .value-item__name { font-family:var(--font-display); font-size:1.0625rem; font-weight:600; color:var(--ink); }
+    .contact { background:var(--ink); position:relative; overflow:hidden; }
+    .contact .geo-bg::before { opacity:.35; }
+    .contact__inner { position:relative; z-index:1; display:grid; grid-template-columns:1fr 1.2fr; gap:clamp(3rem, 7vw, 6rem); align-items:center; }
+    .contact__channels { display:flex; flex-direction:column; gap:1px; }
+    .contact-item { display:flex; align-items:center; gap:1.5rem; padding:1.625rem 1.75rem; background:rgba(255,255,255,.04); border:1px solid rgba(201,162,39,.12); text-decoration:none; transition:background .3s, border-color .3s; }
+    .contact-item:hover { background:rgba(201,162,39,.08); border-color:rgba(201,162,39,.3); }
+    .contact-item__icon { flex-shrink:0; width:44px; height:44px; background:rgba(201,162,39,.1); display:flex; align-items:center; justify-content:center; }
+    .contact-item__icon svg { width:18px; height:18px; stroke:var(--gold); fill:none; stroke-width:1.5; }
+    .contact-item__label { font-size:.6875rem; letter-spacing:.14em; text-transform:uppercase; color:rgba(201,162,39,.7); font-weight:500; margin-bottom:.25rem; }
+    .contact-item__value { font-family:var(--font-display); font-size:1.25rem; font-weight:400; color:var(--white); }
+    .footer { background:#0E0B0A; padding-block:2rem; border-top:1px solid rgba(201,162,39,.15); }
+    .footer__inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+    .footer__brand { font-family:var(--font-display); font-size:1rem; font-weight:600; color:var(--gold); letter-spacing:.04em; }
+    .footer__copy { font-size:.8125rem; color:rgba(253,252,251,.3); font-weight:300; }
+    @media (max-width:960px) { .about__inner, .expertise__inner, .contact__inner { grid-template-columns:1fr; } .services__grid, .values__list { grid-template-columns:repeat(2, 1fr); } }
+    @media (max-width:640px) { :root { --nav-h:60px; } .nav__links { display:none; } .nav__toggle { display:flex; } .nav__links.open { display:flex; flex-direction:column; position:absolute; top:var(--nav-h); left:0; right:0; background:var(--white); border-bottom:1px solid var(--divider); padding:1.25rem 1.5rem; gap:1.25rem; box-shadow:0 8px 24px rgba(0,0,0,.1); } .services__grid, .vision__grid, .values__list { grid-template-columns:1fr; } .hero__vertical { display:none; } .about__logo { max-width:200px; } }
   </style>
 </head>
-
 <body>
-
-  <!-- ─── NAVIGATION ─────────────────────── -->
   <nav class="nav" role="navigation" aria-label="Main navigation">
     <div class="container nav__inner">
-
       <a href="#home" class="nav__brand" aria-label="Insight Middle East Consulting – Home">
         <img src="images/icon.png" alt="Insight ME Icon" class="nav__icon" />
         <img src="images/logo.png" alt="Insight Middle East Consulting" class="nav__logo" />
       </a>
-
       <ul class="nav__links" id="navLinks" role="list">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#expertise">Expertise</a></li>
-        <li><a href="#vision">Vision</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#services">Services</a></li><li><a href="#expertise">Expertise</a></li><li><a href="#vision">Vision</a></li><li><a href="#contact">Contact</a></li>
       </ul>
-
-      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </nav>
-
-
-  <!-- ─── HERO ───────────────────────────── -->
   <section class="hero" id="home">
-    <div class="geo-bg" aria-hidden="true"></div>
-    <div class="hero__rule" aria-hidden="true"></div>
+    <div class="geo-bg" aria-hidden="true"></div><div class="hero__rule" aria-hidden="true"></div>
     <div class="container hero__content">
-
-      <div class="hero__eyebrow" aria-hidden="true">
-        <span class="hero__eyebrow-line"></span>
-        <span class="hero__eyebrow-text">Abu Dhabi, United Arab Emirates</span>
-      </div>
-
-      <h1 class="hero__headline">
-        <strong>Insight<br>Middle East</strong>
-        <em>Consulting</em>
-      </h1>
-
-      <p class="hero__subtitle">Human Resources Consultancy — Shaping Organisations, Empowering People</p>
-
-      <a href="#contact" class="hero__cta">
-        Book a Consultation
+      <div class="hero__eyebrow" aria-hidden="true"><span class="hero__eyebrow-line"></span><span class="hero__eyebrow-text">Abu Dhabi, United Arab Emirates</span></div>
+      <h1 class="hero__headline"><strong>Insight<br>Middle East</strong><em>Consulting</em></h1>
+      <p class="hero__subtitle">One of the leading solutions for modern hiring and HR transformation</p>
+      <p class="hero__lead">Insight Middle East Consulting is a trusted advisory platform built to help organizations attract, evaluate, and hire the right people with confidence. As a strategic solution in recruitment and employment support, it combines consulting expertise with practical tools that streamline the hiring journey and improve outcomes for both employers and talent.</p>
+      <a href="https://nps.insight-me.ae/" class="hero__cta" target="_blank" rel="noopener">
+        Visit Sponsor
         <span class="hero__cta-arrow" aria-hidden="true">→</span>
       </a>
-
     </div>
     <span class="hero__vertical" aria-hidden="true">Strategic HR Solutions · Abu Dhabi · UAE</span>
   </section>
-
-
-  <!-- ─── ABOUT ──────────────────────────── -->
   <section class="about" id="about">
     <div class="container">
       <div class="about__inner">
-
-        <div class="about__left">
-          <div class="about__logo-wrap">
-            <img src="images/logo.png" alt="Insight Middle East Consulting" class="about__logo" />
-
-            <div class="about__badge">
-              <span class="about__badge-label">Commercial License</span>
-              <span class="about__badge-value">Abu Dhabi, UAE</span>
-            </div>
-
-            <div class="about__badge">
-              <span class="about__badge-label">Owner &amp; Managing Consultant</span>
-              <span class="about__badge-value">Mohamed Khairy</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="about__right">
-          <span class="section-label">Who We Are</span>
-          <h2 class="section-title">A trusted partner in <em>HR excellence</em></h2>
-
-          <p class="about__intro">
-            Building organisations where people thrive and businesses perform.
-          </p>
-
-          <p class="about__text">
-            Insight Middle East Consulting is a licensed Human Resources consultancy headquartered in Abu Dhabi. We partner with organisations across the UAE and the wider Middle East to design HR systems that are strategic, scalable, and aligned with business objectives.
-          </p>
-          <p class="about__text">
-            Led by senior HR professional Mohamed Khairy, our practice draws on deep regional expertise and a rigorous consulting methodology — delivering measurable outcomes in workforce planning, structural redesign, and organisational capability.
-          </p>
-
-          <div class="about__meta">
-            <div class="about__meta-item">
-              <span class="about__meta-label">Specialisation</span>
-              <span class="about__meta-value">Human Resources</span>
-            </div>
-            <div class="about__meta-item">
-              <span class="about__meta-label">Region</span>
-              <span class="about__meta-value">UAE &amp; Middle East</span>
-            </div>
-            <div class="about__meta-item">
-              <span class="about__meta-label">Base</span>
-              <span class="about__meta-value">Abu Dhabi</span>
-            </div>
-          </div>
-        </div>
-
+        <div class="about__left"><div class="about__logo-wrap"><img src="images/logo.png" alt="Insight Middle East Consulting" class="about__logo" /><div class="about__badge"><span class="about__badge-label">Commercial License</span><span class="about__badge-value">Abu Dhabi, UAE</span></div><div class="about__badge"><span class="about__badge-label">Owner &amp; Managing Consultant</span><span class="about__badge-value">Mohamed Khairy</span></div></div></div>
+        <div class="about__right"><span class="section-label">Who We Are</span><h2 class="section-title">A trusted partner in <em>HR excellence</em></h2><p class="about__intro">Building organisations where people thrive and businesses perform.</p><p class="about__text">Insight Middle East Consulting is a licensed Human Resources consultancy headquartered in Abu Dhabi. We partner with organisations across the UAE and the wider Middle East to design HR systems that are strategic, scalable, and aligned with business objectives.</p><p class="about__text">Led by senior HR professional Mohamed Khairy, our practice draws on deep regional expertise and a rigorous consulting methodology — delivering measurable outcomes in workforce planning, structural redesign, and organisational capability.</p><div class="about__meta"><div class="about__meta-item"><span class="about__meta-label">Specialisation</span><span class="about__meta-value">Human Resources</span></div><div class="about__meta-item"><span class="about__meta-label">Region</span><span class="about__meta-value">UAE &amp; Middle East</span></div><div class="about__meta-item"><span class="about__meta-label">Base</span><span class="about__meta-value">Abu Dhabi</span></div></div></div>
       </div>
     </div>
   </section>
-
-
-  <!-- ─── SERVICES ───────────────────────── -->
-  <section class="services" id="services">
-    <div class="container">
-
-      <div class="services__head">
-        <div>
-          <span class="section-label">What We Offer</span>
-          <h2 class="section-title">Core <em>Services</em></h2>
-        </div>
-        <div class="services__count" aria-hidden="true">06</div>
-      </div>
-
-      <div class="services__grid">
-
-        <article class="service-card">
-          <div class="service-card__num" aria-hidden="true">01</div>
-          <h3 class="service-card__title">HR Consultancy</h3>
-          <p class="service-card__body">Strategic advisory services tailored to the unique needs of organisations operating in the Gulf region — from HR audits and gap analysis to full-cycle transformation support.</p>
-        </article>
-
-        <article class="service-card">
-          <div class="service-card__num" aria-hidden="true">02</div>
-          <h3 class="service-card__title">Organisational Structure Development</h3>
-          <p class="service-card__body">Designing lean, effective organisational structures that align reporting lines, clarify accountability, and support strategic growth.</p>
-        </article>
-
-        <article class="service-card">
-          <div class="service-card__num" aria-hidden="true">03</div>
-          <h3 class="service-card__title">Policies &amp; Procedures</h3>
-          <p class="service-card__body">Developing comprehensive HR policies and procedural frameworks that ensure compliance, consistency, and operational efficiency across the enterprise.</p>
-        </article>
-
-        <article class="service-card">
-          <div class="service-card__num" aria-hidden="true">04</div>
-          <h3 class="service-card__title">Job Analysis &amp; Job Descriptions</h3>
-          <p class="service-card__body">Rigorous job evaluation methodologies that produce precise, legally sound job descriptions — the foundation of equitable grading and talent acquisition.</p>
-        </article>
-
-        <article class="service-card">
-          <div class="service-card__num" aria-hidden="true">05</div>
-          <h3 class="service-card__title">Performance Evaluation Systems</h3>
-          <p class="service-card__body">Building robust performance management frameworks — KPIs, competency models, and appraisal cycles — that drive accountability and recognise excellence.</p>
-        </article>
-
-        <article class="service-card">
-          <div class="service-card__num" aria-hidden="true">06</div>
-          <h3 class="service-card__title">Training &amp; Development Programs</h3>
-          <p class="service-card__body">Designing targeted learning interventions and competency-based development programmes that build capability and support succession planning.</p>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ─── EXPERTISE ──────────────────────── -->
-  <section class="expertise" id="expertise">
-    <div class="geo-bg" aria-hidden="true"></div>
-    <div class="container">
-      <div class="expertise__inner">
-
-        <div class="expertise__left">
-          <span class="section-label">Our Depth</span>
-          <h2 class="section-title">Where strategy meets <em>execution</em></h2>
-          <p class="expertise__desc">
-            Insight Middle East brings more than consulting — we bring a proven capacity to translate HR strategy into operational reality. With extensive experience in complex, multi-level organisations across public and private sectors, our team navigates regulatory frameworks, cultural dynamics, and technical requirements with equal fluency.
-          </p>
-          <p class="expertise__desc" style="margin-top:1rem;">
-            Our approach is built on evidence, structured methodology, and a genuine commitment to client outcomes. We do not offer templates; we engineer solutions.
-          </p>
-        </div>
-
-        <div class="expertise__right">
-          <div class="expertise__pillars">
-
-            <div class="pillar">
-              <div class="pillar__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              </div>
-              <div>
-                <div class="pillar__title">HR Transformation</div>
-                <div class="pillar__sub">End-to-end restructuring of HR functions and systems</div>
-              </div>
-            </div>
-
-            <div class="pillar">
-              <div class="pillar__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-              </div>
-              <div>
-                <div class="pillar__title">Workforce Planning</div>
-                <div class="pillar__sub">Headcount modelling, succession, and talent pipelines</div>
-              </div>
-            </div>
-
-            <div class="pillar">
-              <div class="pillar__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-              </div>
-              <div>
-                <div class="pillar__title">Competency Mapping</div>
-                <div class="pillar__sub">Behavioural frameworks aligned to strategic objectives</div>
-              </div>
-            </div>
-
-            <div class="pillar">
-              <div class="pillar__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              </div>
-              <div>
-                <div class="pillar__title">Organisational Culture</div>
-                <div class="pillar__sub">Culture diagnostics, values alignment, and change management</div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ─── VISION & MISSION ───────────────── -->
-  <section class="vision" id="vision">
-    <div class="container">
-
-      <span class="section-label">Our Purpose</span>
-      <h2 class="section-title">Vision &amp; <em>Mission</em></h2>
-
-      <div class="vision__grid">
-
-        <div class="vision-card">
-          <div class="vision-card__type">Vision</div>
-          <h3 class="vision-card__headline">To be the region's most trusted HR partner.</h3>
-          <p class="vision-card__body">
-            We aspire to lead HR consultancy in the Middle East — setting the standard for strategic insight, ethical practice, and measurable impact across every engagement.
-          </p>
-        </div>
-
-        <div class="vision-card">
-          <div class="vision-card__type">Mission</div>
-          <h3 class="vision-card__headline">Enabling organisations to unlock human potential.</h3>
-          <p class="vision-card__body">
-            Our mission is to deliver practical, evidence-based HR solutions that strengthen organisational performance, develop people capability, and support sustainable growth across the UAE and the wider region.
-          </p>
-        </div>
-
-      </div>
-
-      <div class="values">
-        <h3 class="values__title">
-          <span class="section-label" style="display:block;text-align:center;margin-bottom:.5rem;">Our Core Values</span>
-        </h3>
-        <div class="values__list">
-
-          <div class="value-item">
-            <div class="value-item__symbol" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
-            </div>
-            <div class="value-item__name">Professionalism</div>
-          </div>
-
-          <div class="value-item">
-            <div class="value-item__symbol" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            </div>
-            <div class="value-item__name">Confidentiality</div>
-          </div>
-
-          <div class="value-item">
-            <div class="value-item__symbol" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-            </div>
-            <div class="value-item__name">Innovation</div>
-          </div>
-
-          <div class="value-item">
-            <div class="value-item__symbol" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-            </div>
-            <div class="value-item__name">Results</div>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- ─── CONTACT ─────────────────────────── -->
-  <section class="contact" id="contact">
-    <div class="geo-bg" aria-hidden="true"></div>
-    <div class="container">
-      <div class="contact__inner">
-
-        <div>
-          <span class="section-label">Get in Touch</span>
-          <h2 class="section-title">Let's talk about<br><em>your organisation</em></h2>
-          <p class="contact__lead">
-            Whether you are looking to transform your HR function, build capability, or simply explore what's possible — we welcome the conversation.
-          </p>
-        </div>
-
-        <div class="contact__channels">
-
-          <a href="tel:+971526713987" class="contact-item" aria-label="Call us">
-            <div class="contact-item__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.63 11 19.79 19.79 0 01.57 2.38 2 2 0 012.54.2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.09A16 16 0 0015.91 17l1.45-1.45a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-            </div>
-            <div>
-              <div class="contact-item__label">Phone</div>
-              <div class="contact-item__value">+971 52 671 3987</div>
-            </div>
-          </a>
-
-          <a href="mailto:info@insight-me.ae" class="contact-item" aria-label="Email us">
-            <div class="contact-item__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </div>
-            <div>
-              <div class="contact-item__label">Email</div>
-              <div class="contact-item__value">info@insight-me.ae</div>
-            </div>
-          </a>
-
-          <a href="https://insight-me.ae" class="contact-item" target="_blank" rel="noopener" aria-label="Visit our website">
-            <div class="contact-item__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-            </div>
-            <div>
-              <div class="contact-item__label">Website</div>
-              <div class="contact-item__value">insight-me.ae</div>
-            </div>
-          </a>
-
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ─── FOOTER ──────────────────────────── -->
-  <footer class="footer">
-    <div class="container footer__inner">
-      <span class="footer__brand">Insight Middle East Consulting</span>
-      <span class="footer__copy">&copy; 2025 Insight Middle East Consulting. Abu Dhabi, UAE. All rights reserved.</span>
-    </div>
-  </footer>
-
-
-  <!-- ─── MINIMAL JS: mobile nav only ─────── -->
-  <script>
-    var toggle = document.getElementById('navToggle');
-    var links  = document.getElementById('navLinks');
-    toggle.addEventListener('click', function() {
-      var open = links.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    links.querySelectorAll('a').forEach(function(a) {
-      a.addEventListener('click', function() {
-        links.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-  </script>
-
+  <section class="services" id="services"><div class="container"><div class="services__head"><div><span class="section-label">What We Offer</span><h2 class="section-title">Core <em>Services</em></h2></div><div class="services__count" aria-hidden="true">06</div></div><div class="services__grid"><article class="service-card"><div class="service-card__num" aria-hidden="true">01</div><h3 class="service-card__title">HR Consultancy</h3><p class="service-card__body">Strategic advisory services tailored to the unique needs of organisations operating in the Gulf region — from HR audits and gap analysis to full-cycle transformation support.</p></article><article class="service-card"><div class="service-card__num" aria-hidden="true">02</div><h3 class="service-card__title">Organisational Structure Development</h3><p class="service-card__body">Designing lean, effective organisational structures that align reporting lines, clarify accountability, and support strategic growth.</p></article><article class="service-card"><div class="service-card__num" aria-hidden="true">03</div><h3 class="service-card__title">Policies &amp; Procedures</h3><p class="service-card__body">Developing comprehensive HR policies and procedural frameworks that ensure compliance, consistency, and operational efficiency across the enterprise.</p></article><article class="service-card"><div class="service-card__num" aria-hidden="true">04</div><h3 class="service-card__title">Talent Acquisition</h3><p class="service-card__body">Helping organisations attract the right people with smarter sourcing, selection support, and recruitment processes aligned to business goals.</p></article><article class="service-card"><div class="service-card__num" aria-hidden="true">05</div><h3 class="service-card__title">Training &amp; Development</h3><p class="service-card__body">Building capability through structured learning strategies, leadership development, and targeted people programs.</p></article><article class="service-card"><div class="service-card__num" aria-hidden="true">06</div><h3 class="service-card__title">Performance Management</h3><p class="service-card__body">Creating performance frameworks that connect goals, feedback, and accountability to measurable business results.</p></article></div></div></section>
+  <section class="expertise" id="expertise"><div class="geo-bg" aria-hidden="true"></div><div class="container"><div class="expertise__inner"><div class="expertise__left"><span class="section-label">Our Depth</span><h2 class="section-title">Where strategy meets <em>execution</em></h2><p class="expertise__desc">Insight Middle East brings more than consulting — we bring a proven capacity to translate HR strategy into operational reality. With extensive experience in complex, multi-level organisations across public and private sectors, our team navigates regulatory frameworks, cultural dynamics, and technical requirements with equal fluency.</p><p class="expertise__desc" style="margin-top:1rem;">Our approach is built on evidence, structured methodology, and a genuine commitment to client outcomes. We do not offer templates; we engineer solutions.</p></div><div class="expertise__right"><div class="expertise__pillars"><div class="pillar"><div class="pillar__icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div><div class="pillar__title">HR Transformation</div><div class="pillar__sub">End-to-end restructuring of HR functions and systems</div></div></div><div class="pillar"><div class="pillar__icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div><div class="pillar__title">Workforce Planning</div><div class="pillar__sub">Headcount modelling, succession, and talent pipelines</div></div></div><div class="pillar"><div class="pillar__icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div><div><div class="pillar__title">Competency Mapping</div><div class="pillar__sub">Behavioural frameworks aligned to strategic objectives</div></div></div><div class="pillar"><div class="pillar__icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="pillar__title">Organisational Culture</div><div class="pillar__sub">Culture diagnostics, values alignment, and change management</div></div></div></div></div></div></div></section>
+  <section class="vision" id="vision"><div class="container"><span class="section-label">Our Purpose</span><h2 class="section-title">Vision &amp; <em>Mission</em></h2><div class="vision__grid"><div class="vision-card"><div class="vision-card__type">Vision</div><h3 class="vision-card__headline">To be the region's most trusted HR partner.</h3><p class="vision-card__body">We aspire to lead HR consultancy in the Middle East — setting the standard for strategic insight, ethical practice, and measurable impact across every engagement.</p></div><div class="vision-card"><div class="vision-card__type">Mission</div><h3 class="vision-card__headline">Enabling organisations to unlock human potential.</h3><p class="vision-card__body">Our mission is to deliver practical, evidence-based HR solutions that strengthen organisational performance, develop people capability, and support sustainable growth across the UAE and the wider region.</p></div></div><div class="values"><h3 class="values__title"><span class="section-label" style="display:block;text-align:center;margin-bottom:.5rem;">Our Core Values</span></h3><div class="values__list"><div class="value-item"><div class="value-item__symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg></div><div class="value-item__name">Integrity</div></div><div class="value-item"><div class="value-item__symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div><div class="value-item__name">Innovation</div></div><div class="value-item"><div class="value-item__symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div><div class="value-item__name">Excellence</div></div><div class="value-item"><div class="value-item__symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l4 7h-8l4-7zm0 20l-4-7h8l-4 7z"/></svg></div><div class="value-item__name">Results</div></div></div></div></div></section>
+  <section class="contact" id="contact"><div class="geo-bg" aria-hidden="true"></div><div class="container"><div class="contact__inner"><div><span class="section-label">Get in Touch</span><h2 class="section-title">Let's talk about<br><em>your organisation</em></h2><p class="contact__lead">Whether you are looking to transform your HR function, build capability, or simply explore what's possible — we welcome the conversation.</p></div><div class="contact__channels"><a href="tel:+971526713987" class="contact-item" aria-label="Call us"><div class="contact-item__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.11 5.18 2 2 0 0 1 5.11 3h3a2 2 0 0 1 2 1.72c.13 1 .39 1.96.78 2.88a2 2 0 0 1-.45 2.11L9.91 10.09a16 16 0 0 0 4 4l.38-.53a2 2 0 0 1 2.11-.45c.92.39 1.88.65 2.88.78A2 2 0 0 1 22 16.92z"/></svg></div><div><div class="contact-item__label">Phone</div><div class="contact-item__value">+971 52 671 3987</div></div></a><a href="mailto:info@insight-me.ae" class="contact-item" aria-label="Email us"><div class="contact-item__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="contact-item__label">Email</div><div class="contact-item__value">info@insight-me.ae</div></div></a><a href="https://insight-me.ae" class="contact-item" target="_blank" rel="noopener" aria-label="Visit our website"><div class="contact-item__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div><div class="contact-item__label">Website</div><div class="contact-item__value">insight-me.ae</div></div></a><a href="https://nps.insight-me.ae/" class="contact-item" target="_blank" rel="noopener" aria-label="Visit Sponsor"><div class="contact-item__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l4 7h-8l4-7zm0 20l-4-7h8l-4 7z"/></svg></div><div><div class="contact-item__label">Sponsor</div><div class="contact-item__value">𝕾𝖕𝖔𝖓𝖘𝖔𝖗</div></div></a></div></div></div></section>
+  <footer class="footer"><div class="container footer__inner"><span class="footer__brand">Insight Middle East Consulting</span><span class="footer__copy">&copy; 2025 Insight Middle East Consulting. Abu Dhabi, UAE. All rights reserved.</span></div></footer>
+  <script>var toggle=document.getElementById('navToggle');var links=document.getElementById('navLinks');toggle.addEventListener('click',function(){var open=links.classList.toggle('open');toggle.setAttribute('aria-expanded',open?'true':'false');});links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');toggle.setAttribute('aria-expanded','false');});});</script>
 </body>
 </html>
