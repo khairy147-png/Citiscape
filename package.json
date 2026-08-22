@@ -1,0 +1,8 @@
+{
+  "name": "insight-site-nps-assessment",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@netlify/blobs": "^10.0.0"
+  }
+}
